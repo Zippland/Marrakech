@@ -2,7 +2,6 @@
   <configuration default="false" name="Viewer" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="comp1110.ass2.gui.Viewer" />
     <module name="comp1110-ass2" />
-    <option name="VM_PARAMETERS" value="--module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="comp1110.ass2.gui.*" />
