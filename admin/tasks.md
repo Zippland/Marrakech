@@ -4,7 +4,7 @@ For each task or sub-task, record who is responsible, the deadline, and any depe
 ## Weekly Meeting Time
 Every Sunday, 5 PM
 ## Brief Task Assignment
-**Zihan jian**:
+**Xinyue Fei**:
 1. Task 1: Read the instructions, fork the assignment repo, and complete admin files.
 2. Task 2: Make an initial *design* for the implementation of the game, including skeleton code.
 3. Task 3: Begin the implementation of the design by storing appropriate information in instances of your classes.
@@ -14,7 +14,7 @@ Every Sunday, 5 PM
 7. Task 9: Implement the `rotateAssam()` method in the `Marrakech` class.
 8. Task 16: Implement a random computer player, and integrate it into the game.
 
-**Xinyue Fei**:
+**Zihan jian**:
 1. Task 5: Construct a state viewer for the game, allowing gamer to visualize a game state String.
 2. Task 6: Implement the `rollDie()` method in the `Marrakech` class.
 3. Task 10: Implement the `isPlacementValid()` method in the `Marrakech` class.
