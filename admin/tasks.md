@@ -24,9 +24,16 @@ Every Sunday, 5 PM
 7. Task 14: Implement the `makePlacement()` method in the `Marrakech` class.
 8. Task 17: Improve the computer player to make moves based on some kind of intelligent decision-making.
 
-## Week 4
+## Week 4 
+D2A: Assignment 2, Stage A - Meeting 13:00 14 Aug
 
-Everyone: create application skeleton - meeting 14:00 19 Mar
+1. **Meeting and Setting up the Group**: Everyone in the group met and got to know each other by asking some basic questions. We asked our tutor for our assigned group name. We forked the assignment repo and added a description to the forked project which contains our unique group name. We added all group members to our group’s repo as ‘maintainers’. Each person cloned our group’s repo using IntelliJ.
+
+2. **Assigning Tasks and Exchanging Contact Information**: We assigned tasks within the group and recorded this in our admin/tasks.md file. We exchanged contact information and recorded this in admin/members.yml.
+
+3. **Arranging a Weekly Meeting Time**: We arranged a weekly meeting time and recorded it at the top of our tasks.md file.
+
+4. **Completion and Verification**: We ensured that all the above tasks were completed and had our tutor check it off before we finished our week 4 lab.
 
 ## Week 5
 
