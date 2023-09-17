@@ -23,9 +23,46 @@ public class Marrakech {
      * @return true if the rug is valid, and false otherwise.
      */
     public static boolean isRugValid(String gameString, String rug) {
-        // FIXME: Task 4
-        return false;
+        // Check if the rug string is of correct length
+        if (rug.length() != 7) {
+            return false;
+        }
+
+        // Check if the first character corresponds to a player color
+        char color = rug.charAt(0);
+        if (color != 'c' && color != 'y' && color != 'r' && color != 'p') {
+            return false;
+        }
+
+        // Check if the next 2 characters form a valid ID
+        String id = rug.substring(1, 3);
+        try {
+            Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        // Check if the next 4 characters form valid coordinates
+        String coordinates = rug.substring(3);
+        for (int i = 0; i < 4; i++) {
+            int coordinate = Character.getNumericValue(coordinates.charAt(i));
+            if (coordinate < 0 || coordinate > 6) {
+                return false;
+            }
+        }
+
+        // Check if the combination of color and ID is unique
+        String[] rugsOnBoard = gameString.split("A")[1].split("n00");
+        for (String rugOnBoard : rugsOnBoard) {
+            if (rugOnBoard.length() >= 3 && rugOnBoard.substring(0, 3).equals(rug.substring(0, 3))) {
+                return false;
+            }
+        }
+
+        return true;
     }
+
+
 
     /**
      * Roll the special Marrakech die and return the result.
@@ -42,8 +79,14 @@ public class Marrakech {
      * @return The result of the roll of the die meeting the criteria above
      */
     public static int rollDie() {
-        // FIXME: Task 6
-        return -1;
+        int roll = (int) (Math.random() * 6) + 1;
+        return switch (roll) {
+            case 1 -> 1;
+            case 2, 3 -> 2;
+            case 4, 5 -> 3;
+            case 6 -> 4;
+            default -> -1;
+        };
     }
 
     /**
@@ -159,4 +202,40 @@ public class Marrakech {
         return "";
     }
 
+    public static Player createPlayer(String playerString) {
+        char color = playerString.charAt(1);
+        int dirhams = Integer.parseInt(playerString.substring(2, 5));
+        int rugs = Integer.parseInt(playerString.substring(5, 7));
+        boolean inGame = playerString.charAt(7) == 'i';
+        return new Player(color, dirhams, rugs, inGame);
+    }
+
+    public static Rug createRug(String rugString) {
+        char color = rugString.charAt(0);
+        int id = Integer.parseInt(rugString.substring(1, 3));
+        int x1 = Character.getNumericValue(rugString.charAt(3));
+        int y1 = Character.getNumericValue(rugString.charAt(4));
+        int x2 = Character.getNumericValue(rugString.charAt(5));
+        int y2 = Character.getNumericValue(rugString.charAt(6));
+        return new Rug(color, id, x1, y1, x2, y2);
+    }
+
+    public static Assam createAssam(String assamString) {
+        int x = Character.getNumericValue(assamString.charAt(1));
+        int y = Character.getNumericValue(assamString.charAt(2));
+        char direction = assamString.charAt(3);
+        return new Assam(x, y, direction);
+    }
+
+    public static Board createBoard(String boardString) {
+        Board board = new Board();
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                String rugString = boardString.substring((i * 7 + j) * 3, (i * 7 + j) * 3 + 3);
+                if (rugString.equals("n00")) continue;
+                board.board[i][j] = createRug(rugString + String.format("%02d%02d", i, j));
+            }
+        }
+        return board;
+    }
 }
