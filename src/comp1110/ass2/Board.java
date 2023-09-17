@@ -24,6 +24,36 @@ public class Board {
         }
     }
 
+    public void fromString(String boardString) {
+        for (int i = 0; i < boardString.length(); i += 3) {
+            String rug = boardString.substring(i, i + 3);
+            int x = i / 21;
+            int y = (i - x * 21) / 3;
+            if (!rug.equals("n00")) {
+                Color color;
+                switch (rug.charAt(0)) {
+                    case 'c':
+                        color = Color.CYAN;
+                        break;
+                    case 'y':
+                        color = Color.YELLOW;
+                        break;
+                    case 'r':
+                        color = Color.RED;
+                        break;
+                    case 'p':
+                        color = Color.PURPLE;
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + rug.charAt(0));
+                }
+                setTileColor(x, y, color);
+            } else {
+                setTileColor(x, y, Color.TRANSPARENT);
+            }
+        }
+    }
+
     public GridPane getGridPane() {
         return gridPane;
     }
