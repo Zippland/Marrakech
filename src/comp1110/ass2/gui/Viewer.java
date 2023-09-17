@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
 
 import static comp1110.ass2.Board.TILE_SIZE;
+import comp1110.ass2.Assam;
 
 /*
 test sample:
@@ -36,6 +37,7 @@ public class Viewer extends Application {
 
     private Polygon assamArrow;
 
+    private Player[] players = new Player[4];
 
     private Board board;
 
@@ -65,6 +67,13 @@ public class Viewer extends Application {
         }
     }
 
+    public Assam parseAssam(String assamString) {
+        int x = Character.getNumericValue(assamString.charAt(0));
+        int y = Character.getNumericValue(assamString.charAt(1));
+        char direction = assamString.charAt(2);
+        return new Assam(x, y, direction);
+    }
+
     /**
      * Draw a placement in the window, removing any previously drawn placements
      *
@@ -82,16 +91,20 @@ public class Viewer extends Application {
                 char color = player.charAt(0);
                 int dirhams = Integer.parseInt(player.substring(1, 4));
                 int rugs = Integer.parseInt(player.substring(4, 6));
-                char status = player.charAt(6);
-                System.out.println("Player " + color + " has " + dirhams + " dirhams, " + rugs + " rugs remaining, and is " + (status == 'i' ? "in" : "out of") + " the game.");
+                boolean inGame = player.charAt(6) == 'i';
+                // Create a new Player object with the extracted information
+                Player newPlayer = new Player(color, dirhams, rugs, inGame);
+                System.out.println("Player " + color + " has " + dirhams + " dirhams, " + rugs + " rugs remaining, and is " + (inGame ? "in" : "out of") + " the game.");
             }
         }
 
         // Extract and print Assam's information
-        String assam = components[1].substring(0, 3);
-        int x = Character.getNumericValue(assam.charAt(0));
-        int y = Character.getNumericValue(assam.charAt(1));
-        char direction = assam.charAt(2);
+        String assamInfo = components[1].substring(0, 3);
+        Assam assam = parseAssam(assamInfo);
+        System.out.println("Assam is at (" + assam.getX() + ", " + assam.getY() + "), facing " + assam.getDirection() + ".");
+        int x = Character.getNumericValue(assamInfo.charAt(0));
+        int y = Character.getNumericValue(assamInfo.charAt(1));
+        char direction = assamInfo.charAt(2);
         System.out.println("Assam is at (" + x + ", " + y + "), facing " + direction + ".");
 
         // Set Assam's position
@@ -136,8 +149,10 @@ public class Viewer extends Application {
                 assamArrow.setRotate(180);
                 break;
         }
+
         // Extract and print the board information
         String board = components[1].substring(3);
+        this.board.fromString(board);
         for (int i = 0; i < board.length(); i += 3) {
             String rug = board.substring(i, i + 3);
             if (!rug.equals("n00")) {
@@ -209,6 +224,7 @@ public class Viewer extends Application {
         assamArrow.setFill(Color.BLACK);
         root.getChildren().add(assamArrow);
     }
+
 
 
     private void drawBoard() {
