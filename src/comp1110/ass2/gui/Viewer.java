@@ -25,6 +25,7 @@ test sample:
 Pr03111iPc03212iPy03313oPp03414iA23Np01p02n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00c02c01
 */
 
+
 public class Viewer extends Application {
 
     private static final int VIEWER_WIDTH = 1200;
