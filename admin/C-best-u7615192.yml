@@ -35,14 +35,13 @@ declaration: >-
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-  - Player
-  - Rug
-  - Assam
+  - https://gitlab.cecs.anu.edu.au/u7174903/comp1110-ass2/src/Player
+  - https://gitlab.cecs.anu.edu.au/u7174903/comp1110-ass2/src/Rug
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-  - rollDie
+  - https://gitlab.cecs.anu.edu.au/u7174903/comp1110-ass2/src/Marrakech.java#81
 
   # sign *your* name and uid here
 name: Xinyue Fei
