@@ -56,14 +56,14 @@ public class Viewer extends Application {
                 int dirhams = Integer.parseInt(player.substring(1, 4));
                 int rugs = Integer.parseInt(player.substring(4, 6));
                 char status = player.charAt(6);
-                String info = "Player " + color + " has " + dirhams + " dirhams, " + rugs + " rugs, and is " + (status == 'i' ? "in" : "out of") + " the game.";
+                String info = "Player < " + (color == 'r' ? "  Red " : color == 'c' ? "  Clay " : color == 'y' ? "Yellow" : "Purple" ) + " >   " + dirhams + " dirhams  |  " + rugs + " rugs  |   " + (status == 'i' ? "InGame" : "Out");
 
                 Label playerLabel = new Label(info);
                 playerLabel.setLayoutX(780); // 设置标签的水平位置
                 playerLabel.setLayoutY(50 + yOffset); // 设置标签的垂直位置
                 playerInfo.getChildren().add(playerLabel);
 
-                yOffset += 30; // 更新偏移量以便下一个标签在下方
+                yOffset += 32; // 更新偏移量以便下一个标签在下方
             }
         }
     }
