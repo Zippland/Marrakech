@@ -56,10 +56,10 @@ public class Viewer extends Application {
                 int dirhams = Integer.parseInt(player.substring(1, 4));
                 int rugs = Integer.parseInt(player.substring(4, 6));
                 char status = player.charAt(6);
-                String info = "Player " + color + " has " + dirhams + " dirhams, " + rugs + " rugs remaining, and is " + (status == 'i' ? "in" : "out of") + " the game.";
+                String info = "Player " + color + " has " + dirhams + " dirhams, " + rugs + " rugs, and is " + (status == 'i' ? "in" : "out of") + " the game.";
 
                 Label playerLabel = new Label(info);
-                playerLabel.setLayoutX(800); // 设置标签的水平位置
+                playerLabel.setLayoutX(780); // 设置标签的水平位置
                 playerLabel.setLayoutY(50 + yOffset); // 设置标签的垂直位置
                 playerInfo.getChildren().add(playerLabel);
 
@@ -95,7 +95,7 @@ public class Viewer extends Application {
                 boolean inGame = player.charAt(6) == 'i';
                 // Create a new Player object with the extracted information
                 Player newPlayer = new Player(color, dirhams, rugs, inGame);
-                System.out.println("Player " + color + " has " + dirhams + " dirhams, " + rugs + " rugs remaining, and is " + (inGame ? "in" : "out of") + " the game.");
+                System.out.println("Player " + color + " has " + dirhams + " dirhams, " + rugs + " rugs, and is " + (inGame ? "in" : "out of") + " the game.");
             }
         }
 
@@ -125,29 +125,6 @@ public class Viewer extends Application {
                 break;
             case 'W':
                 assamImageView.setRotate(-90);
-                break;
-        }
-
-        // After setting Assam's position and direction
-        double arrowOffset = TILE_SIZE / 2.0;
-
-        // Set Assam's arrow position
-        assamArrow.setLayoutX(assamImageView.getX() + arrowOffset);
-        assamArrow.setLayoutY(assamImageView.getY() + arrowOffset);
-
-        // Set Assam's arrow direction
-        switch (direction) {
-            case 'N':
-                assamArrow.setRotate(-90);
-                break;
-            case 'E':
-                assamArrow.setRotate(0);
-                break;
-            case 'S':
-                assamArrow.setRotate(90);
-                break;
-            case 'W':
-                assamArrow.setRotate(180);
                 break;
         }
 
@@ -263,19 +240,18 @@ public class Viewer extends Application {
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
 
         // Initialize the picture and add it to the root group
-        Image image = new Image("file:../../../src/ass2/img/board.png");
+        Image image = new Image("file:src/comp1110/ass2/gui/img/board.png");
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(VIEWER_WIDTH);
         imageView.setFitHeight(VIEWER_HEIGHT);
+        // imageView.setImage(image);
         root.getChildren().add(imageView);
 
-        // Draw the board grid lines
-        drawBoard();
 
         // Initialize the board and add it to the root group
         board = new Board();
-        board.getGridPane().setTranslateX(0);
-        board.getGridPane().setTranslateY(0);
+        board.getGridPane().setTranslateX(103);
+        board.getGridPane().setTranslateY(99);
         root.getChildren().add(board.getGridPane());
 
         root.getChildren().add(controls);
@@ -283,10 +259,10 @@ public class Viewer extends Application {
         root.getChildren().add(playerInfo);
 
         // Initialize the Assam image and add it to the root group
-        Image assamImage = new Image("file:../../../src/ass2/img/assam.png");
+        Image assamImage = new Image("file:src/comp1110/ass2/gui/img/assam.png");
         assamImageView = new ImageView(assamImage);
-        assamImageView.setFitWidth(50);
-        assamImageView.setFitHeight(50);
+        assamImageView.setFitWidth(72);
+        assamImageView.setFitHeight(72);
         root.getChildren().add(assamImageView);
 
         makeControls();
@@ -294,7 +270,8 @@ public class Viewer extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         createAssamArrow();
-
+        String testcode = "Pr03111iPc03212iPy03313oPp03414iA23Np01p02n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00c02c01";
+        displayState(testcode);
     }
 
 }

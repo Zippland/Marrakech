@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 
 
 public class Board {
-    public static final int TILE_SIZE = 80; // you can adjust this value
+    public static final int TILE_SIZE = 72; // you can adjust this value
     private static final int WIDTH = 7;
     private static final int HEIGHT = 7;
     public Rug[][] board;
