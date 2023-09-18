@@ -102,7 +102,6 @@ public class Viewer extends Application {
         // Extract and print Assam's information
         String assamInfo = components[1].substring(0, 3);
         Assam assam = parseAssam(assamInfo);
-        System.out.println("Assam is at (" + assam.getX() + ", " + assam.getY() + "), facing " + assam.getDirection() + ".");
         int x = Character.getNumericValue(assamInfo.charAt(0));
         int y = Character.getNumericValue(assamInfo.charAt(1));
         char direction = assamInfo.charAt(2);
