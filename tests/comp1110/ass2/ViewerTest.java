@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AssamTest {
+class ViewerTest {
     @Test
     void parseAssam() {
         Viewer viewer = new Viewer();

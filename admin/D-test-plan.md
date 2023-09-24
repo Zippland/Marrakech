@@ -1,13 +1,41 @@
+# Test Plan
 
-# Test plan
+## List of Classes
 
-## List of classes
+### 1. Assam
+* **Methods to be tested in isolation:**
+  * `Assam(int x, int y, char direction)`
+  * `getX()`
+  * `getY()`
+  * `getDirection()`
 
-* List below all classes in your implementation that should have unit tests.
-* For each class, list methods that can be tested in isolation.
-* For each class, if there are conditions on the class' behaviour that cannot
-  be tested by calling one method in isolation, give at least one example of
-  a test for such a condition.
+### 2. Player
+* **Methods to be tested in isolation:**
+  * `Player(char color, int dirhams, int rugs, boolean inGame)`
+  * `getColor()`
+  * `getDirhams()`
+  * `getRugs()`
+  * `isInGame()`
 
-Do **not** include in your test plan the `Marrakech` class or the predefined
-static methods for which we have already provided unit tests.
+### 3. Rug
+* **Methods to be tested in isolation:**
+  * `Rug(char color, int id, int x1, int y1, int x2, int y2)`
+  * `getColor()`
+  * `getId()`
+  * `getX1()`
+  * `getY1()`
+  * `getX2()`
+  * `getY2()`
+
+### 4. Viewer
+* **Methods to be tested in isolation:**
+  * `parseAssam(String assamString)`
+
+## Conditions for Testing
+
+* For the `Assam` class, we can test the constructor and getter methods in isolation. We should ensure that the values returned by the getter methods match the values provided to the constructor.
+* For the `Player` class, we can also test the constructor and getter methods in isolation. We should ensure that the values returned by the getter methods match the values provided to the constructor.
+* For the `Rug` class, we can test the constructor and getter methods in isolation. We should ensure that the values returned by the getter methods match the values provided to the constructor.
+* For the `Viewer` class, we can test the `parseAssam` method in isolation. We should ensure that the Assam object returned by the method has the correct property values based on the input string.
+
+Please note that the `Marrakech` class and predefined static methods for which unit tests have already been provided are not included in this test plan.
