@@ -43,10 +43,10 @@ public class Viewer extends Application {
     private Board board;
 
     // 添加一个新的Group元素来保存玩家信息标签
-    private final Group playerInfo = new Group();
+    public final Group playerInfo = new Group();
 
     // 更新玩家信息的方法
-    void updatePlayerInfo(String[] players) {
+    public void updatePlayerInfo(String[] players) {
         playerInfo.getChildren().clear(); // 清除旧的标签
 
         int yOffset = 0; // 用于垂直定位标签的偏移量
@@ -80,7 +80,7 @@ public class Viewer extends Application {
      *
      * @param state an array of two strings, representing the current game state
      */
-    void displayState(String state) {
+    public void displayState(String state) {
         // Split the state string into its components
         String[] components = state.split("A");
 
