@@ -1,6 +1,6 @@
 package comp1110.ass2;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class AssamTest {
 
@@ -8,30 +8,30 @@ public class AssamTest {
     public void testAssamConstructor() {
         Assam assam = new Assam(1, 2, 'N');
 
-        Assert.assertEquals(1, assam.getX());
-        Assert.assertEquals(2, assam.getY());
-        Assert.assertEquals('N', assam.getDirection());
+        Assertions.assertEquals(1, assam.getX());
+        Assertions.assertEquals(2, assam.getY());
+        Assertions.assertEquals('N', assam.getDirection());
     }
 
     @Test
     public void testGetX() {
         Assam assam = new Assam(3, 4, 'S');
 
-        Assert.assertEquals(3, assam.getX());
+        Assertions.assertEquals(3, assam.getX());
     }
 
     @Test
     public void testGetY() {
         Assam assam = new Assam(5, 6, 'E');
 
-        Assert.assertEquals(6, assam.getY());
+        Assertions.assertEquals(6, assam.getY());
     }
 
     @Test
     public void testGetDirection() {
         Assam assam = new Assam(7, 8, 'W');
 
-        Assert.assertEquals('W', assam.getDirection());
+        Assertions.assertEquals('W', assam.getDirection());
     }
 
 }
