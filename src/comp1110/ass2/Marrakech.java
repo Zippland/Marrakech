@@ -52,9 +52,9 @@ public class Marrakech {
         }
 
         // Check if the combination of color and ID is unique
-        String[] rugsOnBoard = gameString.split("A")[1].split("n00");
+        String[] rugsOnBoard = gameString.split("i");
         for (String rugOnBoard : rugsOnBoard) {
-            if (rugOnBoard.length() >= 3 && rugOnBoard.substring(0, 3).equals(rug.substring(0, 3))) {
+            if (rugOnBoard.length() >= 7 && rugOnBoard.substring(0, 3).equals(rug.substring(0, 3))) {
                 return false;
             }
         }
