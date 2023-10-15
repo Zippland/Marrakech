@@ -1,36 +1,3 @@
-# COMP1110 Assignment 2
-
-## Academic Honesty and Integrity
-
-Honesty and integrity are of utmost importance. These goals are *not* at odds with being resourceful and working collaboratively.
-You *should* be resourceful, you should collaborate within your team, and you should discuss the assignment and other aspects of the course with others taking the class.
-However, *you must never misrepresent the work of others as your own*. If you have taken ideas from elsewhere or used code sourced from elsewhere, you must say so with *utmost clarity*.
-At each stage of the assignment you will be asked to submit a statement of originality, either as a group or as individuals.
-This statement is the place for you to declare which ideas or code contained in your submission were sourced from elsewhere.
-
-Please read the ANU's [official position](http://academichonesty.anu.edu.au/) on academic honesty. If you have any questions, please ask a lecturer, tutor, or make a post on the Ed forum.
-
-Carefully review the statements of originality in the [admin](admin) folder which you must complete at each stage.  Edit the relevant statement and update it as you complete each stage of the assignment, ensuring that when you complete each stage, a truthful statement is committed and pushed to your repo.
-
-## Purpose
-
-In this assignment you will *work as a group* to master a number of major themes of this course,
-including software design and implementation, group work, using development tools such as Git and IntelliJ,
-and using JavaFX to build a user interface.  **Above all, this assignment will emphasize group work**;
-while you will receive an individual mark for your work based on your contributions to the assignment,
-**you can only succeed if all members contribute to your group's success**.
-
-## Assignment Deliverables
-
-The assignment is worth 35% of your total assessment, and it will be marked out of 35.
-So each mark in the assignment corresponds to a mark in your final assessment for the course.
-Note that for some stages of the assignment you will get a _group_ mark, and for others you will be _individually_ marked.
-The mark breakdown and the due dates are described on the [deliverables](https://cs.anu.edu.au/courses/comp1110/assessments/deliverables/) page.
-
-Your work will be marked via your tutor accessing git, so it is essential that you carefully follow instructions for setting up and maintaining your group repository.
-At each deadline you will be marked according to whatever is pushed to your repository at the time of the deadline.
-You will also be assessed on how effectively you use git as a development tool.
-
 ## Problem Description - Marrakech
 In the game of Marrakech, two to four merchants in a crowded Marrakech souk compete to impress the market owner, Assam, in the hopes of being declared the best merchant in Marrakech. Players may direct how Assam wanders through the market to entice him into viewing their rugs, but be careful! If you put Assam on course to land on an opponent's rug, you will have to pay up! 
 
@@ -359,32 +326,3 @@ For this extension task, we ask you to provide a computer opponent that is doing
 You should document the logic/strategy that your computer player uses with comments in the code where appropriate.
 
 There is no specific requirement on how smart your computer player has to be. Evaluation of this task is a matter of degree, and we will consider your implementation from the software engineering perspective (i.e., how well designed and documented it is) just as much as its performance.
-
-## Legal and Ethical Issues
-
-First, as with any work you do, you must abide by the principles of
-[honesty and integrity](http://academichonesty.anu.edu.au). You are
-expected to demonstrate honesty and integrity in everything you do.
-
-In addition to those ground rules, you are to follow the rules one
-would normally be subject to in a commercial setting. In particular,
-you may make use of the works of others under two fundamental
-conditions: a) your use of their work must be clearly acknowledged,
-and b) your use of their work must be legal (for example, consistent
-with any copyright and licensing that applies to the given
-material). *Please understand that violation of these rules is a very
-serious offence.* However, as long as you abide by these rules, you
-are explicitly invited to conduct research and make use of a variety
-of sources. You are also given an explicit means with which to declare
-your use of other sources (via originality statements you must
-complete). It is important to realize that you will be assessed on the
-basis of your original contributions to the project. While you won't
-be penalized for correctly attributed use of others' ideas, the work
-of others will not be considered as part of your
-contribution. Therefore, these rules allow you to copy another
-student's work entirely if: a) they gave you permission to do so, and
-b) you acknowledged that you had done so. Notice, however, that if you
-were to do this you would have no original contribution and so would
-receive no marks for the assignment (but you would not have broken any
-rules either).
-
