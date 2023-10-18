@@ -88,6 +88,8 @@ Please see the following images for some example situations and their associated
 
 ### Rug Placement
 
+**NOTE**: the pictures in this section depict the board, rotated by 90 degrees clockwise. ***This is not the way the board is depicted in the game***. The board is instead depicted as it is in [this picture](assets/Board%20Image.png), in the section "[Assam and Payments Between Players](#assam-and-payments-between-players)".
+
 After Assam has moved and any required payment is completed, the current player must place a rug on the board according to the following conditions:
 - At least one of the squares of the rug must be adjacent to (share an edge with) the square that Assam occupies.
 - The rug must not be placed under Assam.
@@ -252,6 +254,18 @@ The board string is read in column-major order, meaning that it first lists the 
 ### Game String
 
 A Game string is the concatenation of one player string for each player, followed by one Assam string, followed by one board string.
+
+For example, the game string `Pc00006oPy01107iPp05107iPr05907iA46WBn00c12n00r14y17y03n00r08r23p22p22y17y03n00r12r23r09r24r24p24c23n00p04c13p08p19n00n00p09p09c13n00r15n00r01n00n00r10r10p01n00r01n00n00r00p10p10p05p05` corresponds to the following game state:
+
+![A game state corresponding to Pc00006oPy01107iPp05107iPr05907iA46WBn00c12n00r14y17y03n00r08r23p22p22y17y03n00r12r23r09r24r24p24c23n00p04c13p08p19n00n00p09p09c13n00r15n00r01n00n00r10r10p01n00r01n00n00r00p10p10p05p05](assets/example-game-state.png)
+
+In this game state:
+- There are four players;
+- The red player has 59 dirhams and seven remaining rugs;
+- The purple player has 51 dirhams and seven remaining rugs;
+- The yellow player has 11 dirhams and seven remaining rugs;
+- The cyan player has no dirhams, and therefore is out of the game; and
+- Assam is standing on the red rug at (4, 6).
 
 ## Marking FAQ and Per-Task Hints
 
