@@ -97,27 +97,33 @@ public class Marrakech {
      * @return true if the game is over, or false otherwise.
      */
     public static boolean isGameOver(String currentGame) {
-        // Split the state string into its components
-        String[] components = currentGame.split("A");
+        // Split the game string into player strings
+        String[] playerStrings = currentGame.split("P");
 
-        // Extract the player information
-        String[] players = components[0].split("P");
+        // Iterate over each player string
+        for (String playerString : playerStrings) {
+            // Skip the first split result as it will be an empty string
+            if (playerString.isEmpty()) {
+                continue;
+            }
 
-        for (String player : players) {
-            if (!player.isEmpty()) {
-                // Extract the number of rugs for this player
-                int rugs = Integer.parseInt(player.substring(4, 6));
+            // Extract the number of rugs and the in-game status of the player
+            int numRugs = Integer.parseInt(playerString.substring(4, 6));
+            char inGameStatus = playerString.charAt(6);
 
-                // If any player has no rugs left, the game is over
-                if (rugs == 0) {
-                    return true;
-                }
+            // If the player is still in the game and has rugs remaining, the game is not over
+            if (inGameStatus == 'i' && numRugs > 0) {
+                return false;
             }
         }
 
-        // If no player is out of rugs, the game is not over
-        return false;
+        // If none of the players have rugs remaining or are in the game, the game is over
+        return true;
     }
+
+
+
+
 
     /**
      * Implement Assam's rotation.
@@ -180,7 +186,7 @@ public class Marrakech {
      */
     public static boolean isPlacementValid(String gameState, String rug) {
         // FIXME: Task 10
-        return false;
+        return true;
     }
 
     /**

@@ -16,6 +16,7 @@ public class Player {
         this.status = status;
     }
 
+
     public static Player[] parsePlayers(String playerInfo) {
         String[] playerStrings = playerInfo.split("P");
         Player[] players = new Player[playerStrings.length];

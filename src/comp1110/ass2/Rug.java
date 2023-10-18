@@ -1,5 +1,8 @@
 package comp1110.ass2;
+
+import javafx.scene.image.Image;
 public class Rug {
+    private Image image;
     private char color;
     private int id;
     private int x1;
@@ -14,6 +17,22 @@ public class Rug {
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        switch (color) {
+            case 'r':
+                this.image = new Image("file:src/comp1110/ass2/gui/img/RedRug.png");
+                break;
+            case 'p':
+                this.image = new Image("file:src/comp1110/ass2/gui/img/PurpleRug.png");
+                break;
+            case 'y':
+                this.image = new Image("file:src/comp1110/ass2/gui/img/YellowRug.png");
+                break;
+            case 'c':
+                this.image = new Image("file:src/comp1110/ass2/gui/img/CyanRug.png");
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid color: " + color);
+        }
     }
 
     public char getColor() {
@@ -39,5 +58,9 @@ public class Rug {
 
     public int getY2() {
         return this.y2;
+    }
+
+    public Image getImage() {
+        return this.image;
     }
 }
