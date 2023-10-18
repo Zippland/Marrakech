@@ -23,28 +23,28 @@ public class Marrakech {
      * @return true if the rug is valid, and false otherwise.
      */
     public static boolean isRugValid(String gameString, String rug) {
-        // Check if the rug string is of correct length
+        // Check if the rug string is 7 characters long
         if (rug.length() != 7) {
             return false;
         }
 
-        // Check if the first character corresponds to a player color
+        // Check if the first character in the rug string corresponds to the color character of a player present in the game
         char color = rug.charAt(0);
-        if (color != 'c' && color != 'y' && color != 'r' && color != 'p') {
+        if (!gameString.contains("P" + color)) {
             return false;
         }
 
-        // Check if the next 2 characters form a valid ID
+        // Check if the next two characters represent a 2-digit ID number
         String id = rug.substring(1, 3);
         try {
-            Integer.parseInt(id);
+            Integer.parseInt(id); // This will throw a NumberFormatException if id is not a valid integer
         } catch (NumberFormatException e) {
             return false;
         }
 
-        // Check if the next 4 characters form valid coordinates
+        // Check if the next 4 characters represent coordinates that are on the board
         String coordinates = rug.substring(3);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < coordinates.length(); i++) {
             int coordinate = Character.getNumericValue(coordinates.charAt(i));
             if (coordinate < 0 || coordinate > 6) {
                 return false;
@@ -52,11 +52,10 @@ public class Marrakech {
         }
 
         // Check if the combination of color and ID is unique
-        String[] rugsOnBoard = gameString.split("i");
-        for (String rugOnBoard : rugsOnBoard) {
-            if (rugOnBoard.length() >= 7 && rugOnBoard.substring(0, 3).equals(rug.substring(0, 3))) {
-                return false;
-            }
+        String rugInfo = rug.substring(0, 3); // Get the color and ID of the rug
+        String boardString = gameString.substring(gameString.indexOf('B')); // Get the board string from the game string
+        if (boardString.contains(rugInfo)) {
+            return false;
         }
 
         return true;
@@ -98,9 +97,26 @@ public class Marrakech {
      * @return true if the game is over, or false otherwise.
      */
     public static boolean isGameOver(String currentGame) {
-        // FIXME: Task 8
-        return false;
+        String[] players = currentGame.split("A")[0].split("P");
+        int activePlayersWithRugs = 0;
+
+        for (String player : players) {
+            if (!player.isEmpty()) {
+                int rugsLeft = Integer.parseInt(player.substring(3, 5));
+                char status = player.charAt(5);
+
+                if (status == 'i' && rugsLeft > 0) {
+                    activePlayersWithRugs++;
+                }
+            }
+        }
+
+        return activePlayersWithRugs <= 1;
     }
+
+
+
+
 
     /**
      * Implement Assam's rotation.
