@@ -15,6 +15,14 @@ public class Assam {
         this.direction = direction;
     }
 
+    public static Assam parseAssam(String assamString) {
+        int x = Character.getNumericValue(assamString.charAt(0));
+        int y = Character.getNumericValue(assamString.charAt(1));
+        char direction = assamString.charAt(2);
+        return new Assam(x, y, direction);
+    }
+
+
     public int getX() {
         return this.x;
     }
