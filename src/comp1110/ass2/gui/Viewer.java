@@ -22,7 +22,7 @@ import comp1110.ass2.Assam;
 
 /*
 test sample:
-Pr03111iPc03212iPy03313oPp03414iA23Np01p02n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00c02c01
+Pr03111iPc03212iPy03313oPp03414iA23NBp01p02n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00c02c01
 */
 
 
@@ -128,7 +128,7 @@ public class Viewer extends Application {
         }
 
         // Extract and print the board information
-        String board = components[1].substring(3);
+        String board = components[1].substring(4);
         this.board.fromString(board);
         for (int i = 0; i < board.length(); i += 3) {
             String rug = board.substring(i, i + 3);
@@ -269,7 +269,7 @@ public class Viewer extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         createAssamArrow();
-        String testcode = "Pr03111iPc03212iPy03313oPp03414iA23Np01p02n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00c02c01";
+        String testcode = "Pr03111iPc03212iPy03313oPp03414iA23NBp01p02n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00c02c01";
         displayState(testcode);
     }
 

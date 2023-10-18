@@ -97,22 +97,28 @@ public class Marrakech {
      * @return true if the game is over, or false otherwise.
      */
     public static boolean isGameOver(String currentGame) {
-        String[] players = currentGame.split("A")[0].split("P");
-        int activePlayersWithRugs = 0;
+        // Split the currentGame string into individual player strings
+        String[] playerStrings = currentGame.split("P");
 
-        for (String player : players) {
-            if (!player.isEmpty()) {
-                int rugsLeft = Integer.parseInt(player.substring(3, 5));
-                char status = player.charAt(5);
+        for (String playerString : playerStrings) {
+            if (!playerString.isEmpty()) {
+                // Get the number of rugs left for this player
+                int rugsLeft = Integer.parseInt(playerString.substring(4, 6));
 
-                if (status == 'i' && rugsLeft > 0) {
-                    activePlayersWithRugs++;
+                // Check if the player has no rugs left
+                if (rugsLeft == 0) {
+                    return true;
                 }
             }
         }
 
-        return activePlayersWithRugs <= 1;
+        // If no player has 0 rugs left, the game is not over
+        return false;
     }
+
+
+
+
 
 
 
