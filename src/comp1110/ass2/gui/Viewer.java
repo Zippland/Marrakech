@@ -205,7 +205,7 @@ public class Viewer extends Application {
 
 
     private void drawBoard() {
-        for (int i = 0; i <= 7; i++) {  // 注意这里改成了i <= 7
+        for (int i = 0; i <= 7; i++) {
             for (int j = 0; j <= 7; j++) {
                 if (i < 7 && j < 7) {
                     Rectangle rect = new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);

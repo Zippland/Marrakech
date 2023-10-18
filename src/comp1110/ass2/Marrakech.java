@@ -1,7 +1,7 @@
 package comp1110.ass2;
 
+import comp1110.ass2.*;
 public class Marrakech {
-
     /**
      * Determine whether a rug String is valid.
      * For this method, you need to determine whether the rug String is valid, but do not need to determine whether it
@@ -97,32 +97,27 @@ public class Marrakech {
      * @return true if the game is over, or false otherwise.
      */
     public static boolean isGameOver(String currentGame) {
-        // Split the currentGame string into individual player strings
-        String[] playerStrings = currentGame.split("P");
+        // Split the state string into its components
+        String[] components = currentGame.split("A");
 
-        for (String playerString : playerStrings) {
-            if (!playerString.isEmpty()) {
-                // Get the number of rugs left for this player
-                int rugsLeft = Integer.parseInt(playerString.substring(4, 6));
+        // Extract the player information
+        String[] players = components[0].split("P");
 
-                // Check if the player has no rugs left
-                if (rugsLeft == 0) {
+        for (String player : players) {
+            if (!player.isEmpty()) {
+                // Extract the number of rugs for this player
+                int rugs = Integer.parseInt(player.substring(4, 6));
+
+                // If any player has no rugs left, the game is over
+                if (rugs == 0) {
                     return true;
                 }
             }
         }
 
-        // If no player has 0 rugs left, the game is not over
+        // If no player is out of rugs, the game is not over
         return false;
     }
-
-
-
-
-
-
-
-
 
     /**
      * Implement Assam's rotation.
@@ -138,9 +133,39 @@ public class Marrakech {
      * rotation is illegal.
      */
     public static String rotateAssam(String currentAssam, int rotation) {
-        // FIXME: Task 9
-        return "";
+        rotation %= 360;
+        if (rotation == 270){
+            rotation = -90;
+        }
+        if (rotation == -270){
+            rotation = 90;
+        }
+        if (rotation != 90 && rotation != -90 ) {
+            return currentAssam; // Invalid rotation
+        }
+
+        char x = currentAssam.charAt(1);
+        char y = currentAssam.charAt(2);
+        char direction = currentAssam.charAt(3);
+
+        switch (direction) {
+            case 'N':
+                direction = rotation == 90 ? 'E' : 'W' ;
+                break;
+            case 'E':
+                direction = rotation == 90 ? 'S' : 'N' ;
+                break;
+            case 'S':
+                direction = rotation == 90 ? 'W' : 'E' ;
+                break;
+            case 'W':
+                direction = rotation == 90 ? 'N' : 'S' ;
+                break;
+        }
+        return "A" + x + y + direction;
     }
+
+
 
     /**
      * Determine whether a potential new placement is valid (i.e that it describes a legal way to place a rug).
@@ -188,9 +213,74 @@ public class Marrakech {
      * @return A char representing the winner of the game as described above.
      */
     public static char getWinner(String gameState) {
-        // FIXME: Task 12
-        return '\0';
+        // Split the game state string into its components
+        String[] components = gameState.split("A");
+
+        // Extract the player information
+        String[] playerStrings = components[0].split("P");
+        int[] dirhams = new int[4];
+        int[] scores = new int[4];
+        char[] colors = new char[4];
+        boolean[] inGame = new boolean[4];
+        for (int i = 1; i < playerStrings.length; i++) {
+            String playerString = playerStrings[i];
+            colors[i-1] = playerString.charAt(0);
+            int dirham = Integer.parseInt(playerString.substring(1, 4));
+            inGame[i-1] = playerString.charAt(6) == 'i';
+            dirhams[i-1] = dirham;
+        }
+
+        if(!isGameOver(gameState)){
+            return 'n';
+        }
+
+        // Extract the board information
+        String board = components[1].substring(4);
+        for (int i = 0; i < board.length(); i += 3) {
+            String rug = board.substring(i, i + 3);
+            if (!rug.equals("n00")) {
+                char color = rug.charAt(0);
+                for (int j = 0; j < 4; j++) {
+                    if (colors[j] == color) {
+                        scores[j]++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Calculate total scores and find the player with the highest score
+        int[] totalScores = new int[4];
+        int maxScore = -1;
+        int maxScoreIndex = -1;
+        for (int i = 0; i < 4; i++) {
+            if (inGame[i]) {
+                totalScores[i] = dirhams[i] + scores[i];
+                if (totalScores[i] > maxScore) {
+                    maxScore = totalScores[i];
+                    maxScoreIndex = i;
+                }
+            }
+        }
+
+        // Check for ties
+        for (int i = 0; i < 4; i++) {
+            if (i != maxScoreIndex && inGame[i] && totalScores[i] == maxScore) {
+                // If the tied players have the same number of dirhams, then it's a tie game
+                if (dirhams[i] == dirhams[maxScoreIndex]) {
+                    return 't';
+                } else if (dirhams[i] > dirhams[maxScoreIndex]) {
+                    // If the current player has more dirhams than the previous max, update the max
+                    maxScoreIndex = i;
+                }
+            }
+        }
+
+        // Return the color of the player with the highest score
+        return colors[maxScoreIndex];
     }
+
+
 
     /**
      * Implement Assam's movement.
@@ -204,8 +294,90 @@ public class Marrakech {
      * @return A String representing Assam's state after the movement.
      */
     public static String moveAssam(String currentAssam, int dieResult){
-        // FIXME: Task 13
-        return "";
+        int x = Character.getNumericValue(currentAssam.charAt(1));
+        int y = Character.getNumericValue(currentAssam.charAt(2));
+        char direction = currentAssam.charAt(3);
+
+        switch (direction) {
+            case 'N':
+                if (y > dieResult-1) {
+                    y -= dieResult;
+                } else {
+                    if(x==1 || x==3 || x==5){
+                        x-=1;
+                        y = dieResult - y - 1;
+                        direction = 'S';
+                    }else if(x==0 || x==2 || x==4){
+                        x+=1;
+                        y = dieResult - y - 1;
+                        direction = 'S';
+                    }else{
+                        x = 7 - dieResult + y;
+                        y = 0;
+                        direction = 'W';
+                    }
+                }
+                break;
+            case 'E':
+                if (x + dieResult < 7) {
+                    x += dieResult;
+                } else {
+                    if(y==1 || y==3 || y==5){
+                        y+=1;
+                        x = 13 - dieResult - x;
+                        direction = 'W';
+                    }else if(y==2 || y==4 || y==6){
+                        y-=1;
+                        x = 13 - dieResult - x;
+                        direction = 'W';
+                    }else{
+                        y = dieResult + x - 7;
+                        x = 6;
+                        direction = 'S';
+                    }
+                }
+                break;
+            case 'S':
+                if (y + dieResult < 7) {
+                    y += dieResult;
+                } else {
+                    if(x==1 || x==3 || x==5){
+                        x+=1;
+                        y = 13 - dieResult - y;
+                        direction = 'N';
+                    }else if(x==2 || x==4 || x==6){
+                        x-=1;
+                        y = 13 - dieResult - y;
+                        direction = 'N';
+                    }else{
+                        x = dieResult + y - 7;
+                        y = 6;
+
+                        direction = 'E';
+                    }
+                }
+                break;
+            case 'W':
+                if (x > dieResult-1) {
+                    x -= dieResult;
+                } else {
+                    if(y==1||y==3||y==5){
+                        y-=1;
+                        x = dieResult - x - 1;
+                        direction = 'E';
+                    }else if(y==0||y==2||y==4){
+                        y+=1;
+                        x = dieResult - x - 1;
+                        direction = 'E';
+                    }else{
+                        y = 7 - dieResult + x;
+                        x = 0;
+                        direction = 'N';
+                    }
+                }
+                break;
+        }
+        return "A" + x + y + direction;
     }
 
     /**
@@ -222,42 +394,5 @@ public class Marrakech {
     public static String makePlacement(String currentGame, String rug) {
         // FIXME: Task 14
         return "";
-    }
-
-    public static Player createPlayer(String playerString) {
-        char color = playerString.charAt(1);
-        int dirhams = Integer.parseInt(playerString.substring(2, 5));
-        int rugs = Integer.parseInt(playerString.substring(5, 7));
-        boolean inGame = playerString.charAt(7) == 'i';
-        return new Player(color, dirhams, rugs, inGame);
-    }
-
-    public static Rug createRug(String rugString) {
-        char color = rugString.charAt(0);
-        int id = Integer.parseInt(rugString.substring(1, 3));
-        int x1 = Character.getNumericValue(rugString.charAt(3));
-        int y1 = Character.getNumericValue(rugString.charAt(4));
-        int x2 = Character.getNumericValue(rugString.charAt(5));
-        int y2 = Character.getNumericValue(rugString.charAt(6));
-        return new Rug(color, id, x1, y1, x2, y2);
-    }
-
-    public static Assam createAssam(String assamString) {
-        int x = Character.getNumericValue(assamString.charAt(1));
-        int y = Character.getNumericValue(assamString.charAt(2));
-        char direction = assamString.charAt(3);
-        return new Assam(x, y, direction);
-    }
-
-    public static Board createBoard(String boardString) {
-        Board board = new Board();
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                String rugString = boardString.substring((i * 7 + j) * 3, (i * 7 + j) * 3 + 3);
-                if (rugString.equals("n00")) continue;
-                board.board[i][j] = createRug(rugString + String.format("%02d%02d", i, j));
-            }
-        }
-        return board;
     }
 }
