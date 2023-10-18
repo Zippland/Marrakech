@@ -5,7 +5,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-
 public class Board {
     public static final int TILE_SIZE = 72; // you can adjust this value
     private static final int WIDTH = 7;
