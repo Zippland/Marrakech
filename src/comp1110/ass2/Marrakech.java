@@ -181,6 +181,29 @@ public class Marrakech {
      * @return true if the placement is valid, and false otherwise.
      */
     public static boolean isPlacementValid(String gameState, String rug) {
+        String[] gameStateComponents = gameState.split("A");
+        String playerStrings = gameStateComponents[0];
+        String[] players = playerStrings.split("P");
+
+        if (players.length != 5) { // We expect 5 elements because the split method includes an empty string at index 0
+            return false;
+        }
+
+        // Check the format of each player string
+        for (int i = 1; i < players.length; i++) {
+            String player = players[i];
+            if (player.length() != 7) { // Each player string should be 7 characters long
+                return false;
+            }
+            if (!Character.isDigit(player.charAt(1)) || !Character.isDigit(player.charAt(2)) || !Character.isDigit(player.charAt(3)) ||
+                    !Character.isDigit(player.charAt(4)) || !Character.isDigit(player.charAt(5))) {
+                return false;
+            }
+            if (player.charAt(6) != 'i' && player.charAt(6) != 'o') {
+                return false;
+            }
+        }
+
         String[] components = gameState.split("A");
 
         // Extract and print Assam's information
@@ -194,6 +217,11 @@ public class Marrakech {
         int rugY1 = Integer.parseInt(rug.substring(4, 5));
         int rugX2 = Integer.parseInt(rug.substring(5, 6));
         int rugY2 = Integer.parseInt(rug.substring(6, 7));
+
+        // Check if the rug's coordinates are within the bounds of the board
+        if (rugX1 < 0 || rugX1 >= 7 || rugY1 < 0 || rugY1 >= 7 || rugX2 < 0 || rugX2 >= 7 || rugY2 < 0 || rugY2 >= 7) {
+            return false;
+        }
 
         // Check if the rug is adjacent to Assam
         if (Math.abs(rugX1 - assamX) + Math.abs(rugY1 - assamY) > 1) {
@@ -485,16 +513,23 @@ public class Marrakech {
      * or the input currentGame unchanged otherwise.
      */
     public static String makePlacement(String currentGame, String rug) {
-        if(isPlacementValid(currentGame, rug)){
+
+        if(isPlacementValid(currentGame, rug)&&isRugValid(currentGame, rug)){
             String boardState = currentGame.split("A")[1].substring(4);
             String newBoardState = "";
-            Rug R = Rug.parseRug(rug);
+            char color = rug.charAt(0);
+            String id = rug.substring(1, 3);
+            int x1 = Character.getNumericValue(rug.charAt(3));
+            int y1 = Character.getNumericValue(rug.charAt(4));
+            int x2 = Character.getNumericValue(rug.charAt(5));
+            int y2 = Character.getNumericValue(rug.charAt(6));
+
             for (int i = 0; i < boardState.length(); i += 3) {
                 int currentX = i / 21;
                 int currentY = (i - currentX * 21) / 3;
-                if ((currentX == R.x1 && currentY == R.y1) || (currentX == R.x2 && currentY == R.y2)) {
+                if ((currentX == x1 && currentY == y1) || (currentX == x2 && currentY == y2)) {
                     // Replace the tile state with the new rug color and id
-                    newBoardState += String.valueOf(R.getColor()) + R.getId();
+                    newBoardState += color + id;
                 } else {
                     // Keep the original tile state
                     newBoardState += boardState.substring(i, i + 3);
@@ -502,10 +537,26 @@ public class Marrakech {
             }
 
             // Replace the board state in the game code with the new board state
-            String newGameCode = currentGame.split("A")[0] + "A" + currentGame.split("A")[1].substring(0, 4) + newBoardState;
+            String[] gameParts = currentGame.split("A");
+            String playerString = gameParts[0];
+            String[] players = playerString.split("P");
+            for (int i = 1; i < players.length; i++) {
+                if (players[i].charAt(0) == color) {
+                    int rugCount = Integer.parseInt(players[i].substring(4, 6));
+                    rugCount--;
+                    String newRugCount = String.format("%02d", rugCount);
+                    players[i] = players[i].substring(0, 4) + newRugCount + players[i].substring(6);
+
+                    break;
+                }
+            }
+            playerString = String.join("P", players);
+            String newGameCode = playerString + "A" + gameParts[1].substring(0, 4) + newBoardState;
 
             return newGameCode;
         }
         return currentGame;
     }
+
+
 }
