@@ -5,10 +5,10 @@ public class Rug {
     private Image image;
     private char color;
     private int id;
-    private int x1;
-    private int y1;
-    private int x2;
-    private int y2;
+    int x1;
+    int y1;
+    int x2;
+    int y2;
 
     public Rug(char color, int id, int x1, int y1, int x2, int y2) {
         this.color = color;
@@ -34,6 +34,20 @@ public class Rug {
                 throw new IllegalArgumentException("Invalid color: " + color);
         }
     }
+    public String getRugString() {
+        System.out.println(""+color+String.format("%02d", id)+x1+y1+x2+y2);
+        return ""+color+String.format("%02d", id)+x1+y1+x2+y2;
+    }
+
+    public static Rug parseRug(String rugString) {
+        char color = rugString.charAt(0);
+        int id = Integer.parseInt(rugString.substring(1, 3));
+        int x1 = Character.getNumericValue(rugString.charAt(3));
+        int y1 = Character.getNumericValue(rugString.charAt(4));
+        int x2 = Character.getNumericValue(rugString.charAt(5));
+        int y2 = Character.getNumericValue(rugString.charAt(6));
+        return new Rug(color, id, x1, y1, x2, y2);
+    }
 
     public char getColor() {
         return this.color;
@@ -47,7 +61,6 @@ public class Rug {
         return this.y1;
     }
 
-    // You might also want to add getters for the other fields
     public int getId() {
         return this.id;
     }

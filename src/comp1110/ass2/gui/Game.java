@@ -9,15 +9,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.effect.Glow;
 
-import comp1110.ass2.Assam;
-
 public class Game extends Application {
+    //Game code modification
     public String Gamecode;
     public void updateGameCode(String newGameCode) {
         this.Gamecode = newGameCode;
         displayState(this.Gamecode);
     }
-    private String RugId = "00";
+    public String getGameCode() {
+        return this.Gamecode;
+    }
+
+    //Rug Id modification
+    private String RugId = "01";
     public void updateRugId() {
         int number = Integer.parseInt(this.RugId);
         number += 1;
@@ -27,30 +31,28 @@ public class Game extends Application {
         return this.RugId;
     }
 
-    public String getGameCode() {
-        return this.Gamecode;
-    }
-
+    //color Index modification
+    public int colorIndex = 0;
     public final char[] colors = {'r', 'p', 'c', 'y'};
     public String[] colors2 = {"Red", "Purple", "Cyan", "Yellow"};
-    public int colorIndex = 0;
+
     public boolean isRollingDice = false;
     public boolean isRotatingAssam = true;
-    private final Group root = new Group();
+    public boolean rugIsHorizontal = true;
+    public final Group root = new Group();
+    public final Group playerInfo = new Group();
     private static final int VIEWER_WIDTH = 1200;
     private static final int VIEWER_HEIGHT = 700;
     public ImageView assamImageView;
-    private Player[] players;
-    private int currentPlayerIndex = 0;
+    public ImageView diceImageView;
+    private ImageView rugImageView;
+    public Player[] players;
     public Board board;
     public Assam assam;
-    public final Group playerInfo = new Group();
-    private ImageView rugImageView;
-    public boolean rugIsHorizontal = true;
     private Glow glowEffect = new Glow(0.8);
 
     public Player getCurrentPlayer() {
-        return players[currentPlayerIndex];
+        return players[colorIndex];
     }
 
     public void displayState(String state) {
@@ -59,10 +61,10 @@ public class Game extends Application {
         String[] components = state.split("A");
 
         // Extract and print the player information
-        Player[] players = Player.parsePlayers(components[0]);
         Player.updatePlayerInfo(playerInfo, players);
 
         // Extract and print Assam's information
+        System.out.println("TEST: "+Gamecode);
         String assamInfo = components[1].substring(0, 3);
         assam = Assam.parseAssam(assamInfo);
 
@@ -72,7 +74,6 @@ public class Game extends Application {
 
         // Extract and print the board information
         String board = components[1].substring(4);
-        this.board.fromString(board);
     }
     @Override
 
@@ -113,12 +114,28 @@ public class Game extends Application {
         rugImageView.setVisible(false); // Set the rug invisible initially
         root.getChildren().add(rugImageView);
 
+        // Initialize the dice image and add it to the root group
+        Image diceImage = new Image("file:src/comp1110/ass2/gui/img/die.png");
+        diceImageView = new ImageView(diceImage);
+        diceImageView.setFitWidth(100);
+        diceImageView.setFitHeight(100);
+        diceImageView.setVisible(false);
+        root.getChildren().add(diceImageView);
+
+        // Initialize the players
+        players = new Player[4];
+        players[0] = new Player('r', 30, 15, true, this);
+        players[1] = new Player('p', 30, 15, true, this);
+        players[2] = new Player('c', 30, 15, true, this);
+        players[3] = new Player('y', 30, 15, true, this);
 
         // Mouse Actions
         MouseActions mouseActions = new MouseActions(this, rugImageView);
         mouseActions.handleMouseMoved(scene);
         mouseActions.handleMouseScroll(scene);
         mouseActions.handleMouseClicked(scene);
+        mouseActions.handleMouseMoved(scene);
+
 
         stage.setScene(scene);
         stage.show();

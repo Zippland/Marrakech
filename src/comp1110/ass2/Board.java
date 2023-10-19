@@ -42,36 +42,6 @@ public class Board {
     }
 
 
-    public void fromString(String boardString) {
-        for (int i = 0; i < boardString.length(); i += 3) {
-            String rug = boardString.substring(i, i + 3);
-            int x = i / 21;
-            int y = (i - x * 21) / 3;
-            if (!rug.equals("n00")) {
-                Color color;
-                switch (rug.charAt(0)) {
-                    case 'c':
-                        color = Color.CYAN;
-                        break;
-                    case 'y':
-                        color = Color.YELLOW;
-                        break;
-                    case 'r':
-                        color = Color.RED;
-                        break;
-                    case 'p':
-                        color = Color.PURPLE;
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + rug.charAt(0));
-                }
-                setTileColor(x, y, color);
-            } else {
-                setTileColor(x, y, Color.TRANSPARENT);
-            }
-        }
-    }
-
     public GridPane getGridPane() {
         return gridPane;
     }
@@ -85,7 +55,7 @@ public class Board {
         }
     }
 
-    public void addRug(Rug rug, boolean rugIsHorizontal, Game game) {
+    public boolean addRug(Rug rug, boolean rugIsHorizontal, Game game) {
         // Create a new ImageView for the first part of the rug
         ImageView rugView = new ImageView(rug.getImage());
         rugView.setFitWidth(rugIsHorizontal ? 2*Board.TILE_SIZE : Board.TILE_SIZE);
@@ -100,18 +70,12 @@ public class Board {
         rugView.setY((pane.getPrefHeight() - rugView.getFitHeight()) / 2);
 
         // Add the pane to the grid
-        int x1 = rugIsHorizontal ? rug.getX1()-2:rug.getX1()-1;
-        int y1 = rugIsHorizontal ? rug.getY1()-1:rug.getY1()-2;
-        gridPane.add(pane, x1, y1);
+        gridPane.add(pane, rug.x1, rug.y1);
 
-        int x2 = rugIsHorizontal ? x1+1:x1;
-        int y2 = rugIsHorizontal ? y1:y1+1;
-
-        // Update the game code
-        String newGameCode = updateBoardCode(game.getGameCode(), rug, x1, y1, x2, y2, game.getRugId());
+        String newGameCode = updateBoardCode(game.getGameCode(), rug, rug.x1, rug.y1, rug.x2, rug.y2, game.getRugId());
         game.updateRugId();
-        System.out.println(newGameCode);
         game.updateGameCode(newGameCode);
+        return false;
     }
 
     public String updateBoardCode(String gameCode, Rug rug, int x1, int y1, int x2, int y2, String RugId) {
@@ -135,7 +99,5 @@ public class Board {
 
         return newGameCode;
     }
-
-
 
 }

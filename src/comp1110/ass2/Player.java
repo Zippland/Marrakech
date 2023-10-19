@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import comp1110.ass2.gui.Game;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 
@@ -8,28 +9,26 @@ public class Player {
     private int dirhams;
     private int rugs;
     private boolean status;
+    private Game game;
 
-    public Player(char color, int dirhams, int rugs, boolean status) {
+    public Player(char color, int dirhams, int rugs, boolean status, Game game) {
         this.color = color;
         this.dirhams = dirhams;
         this.rugs = rugs;
         this.status = status;
+        this.game = game;
     }
 
-
-    public static Player[] parsePlayers(String playerInfo) {
-        String[] playerStrings = playerInfo.split("P");
-        Player[] players = new Player[playerStrings.length];
-        for (int i = 0; i < playerStrings.length; i++) {
-            if (!playerStrings[i].isEmpty()) {
-                char color = playerStrings[i].charAt(0);
-                int dirhams = Integer.parseInt(playerStrings[i].substring(1, 4));
-                int rugs = Integer.parseInt(playerStrings[i].substring(4, 6));
-                char status = playerStrings[i].charAt(6);
-                players[i] = new Player(color, dirhams, rugs, status == 'i');
-            }
+    public void updateGameCode(String Gamecode) {
+        StringBuilder newGameCode = new StringBuilder();
+        for (Player player : game.players) {
+            newGameCode.append(player.getPlayerString());
         }
-        return players;
+        game.updateGameCode(newGameCode.toString());
+    }
+
+    public String getPlayerString() {
+        return "P" + this.color + String.format("%03d", this.dirhams) + String.format("%02d", this.rugs) + (this.status ? "i" : "o");
     }
 
     public static void updatePlayerInfo(Group playerInfo, Player[] players) {
@@ -44,11 +43,52 @@ public class Player {
         }
     }
 
+
     public Label getPlayerInfo(int yOffset) {
         String info = "Player < " + (color == 'r' ? "  Red " : color == 'c' ? "  Clay " : color == 'y' ? "Yellow" : "Purple" ) + " >   " + dirhams + " dirhams  |  " + rugs + " rugs  |   " + (status  ? "InGame" : "Out");
         Label playerLabel = new Label(info);
         playerLabel.setLayoutX(780); // Set the horizontal position of the label
-        playerLabel.setLayoutY(50 + yOffset); // Set the vertical position of the label
+        playerLabel.setLayoutY(50 + yOffset); // Set the vertical position of the label using game's currentPlayerIndex
         return playerLabel;
     }
+
+    public void updateGameCode(Rug rug) {
+        System.out.println(this.color);
+        System.out.println(rug.getColor());
+        if (this.color == rug.getColor()) {
+            // Decrease the number of rugs
+            this.rugs -= 1;
+            // update the dirhams
+            this.dirhams += 1;
+            // Update the status
+            this.status = this.rugs == 0 ? false : true;
+
+            // Split the game code into its components
+            String[] components = this.game.getGameCode().split("P");
+            String[] Tempcomponents = this.game.getGameCode().split("A");
+            for (int i = 1; i < components.length; i++) {
+                if (components[i].charAt(0) == this.color) {
+                    // Update the player's information in the game code
+                    components[i] = Character.toString(this.color) + String.format("%03d", this.dirhams) + String.format("%02d", this.rugs) + (this.status ? "i" : "o");
+                    break;
+                }
+            }
+
+            // Reconstruct the game code
+            StringBuilder newGameCode = new StringBuilder(components[0]);
+            for (int i = 1; i < components.length; i++) {
+                newGameCode.append("P").append(components[i]);
+            }
+            if(this.color=='p'){
+                newGameCode.append("A").append(Tempcomponents[1]);
+            }
+
+            // Update the game code
+            this.game.updateGameCode(newGameCode.toString());
+        }
+    }
+
+
+
+
 }

@@ -94,8 +94,6 @@ public class Viewer extends Application {
                 int rugs = Integer.parseInt(player.substring(4, 6));
                 boolean inGame = player.charAt(6) == 'i';
                 // Create a new Player object with the extracted information
-                Player newPlayer = new Player(color, dirhams, rugs, inGame);
-                System.out.println("Player " + color + " has " + dirhams + " dirhams, " + rugs + " rugs, and is " + (inGame ? "in" : "out of") + " the game.");
             }
         }
 
@@ -129,7 +127,6 @@ public class Viewer extends Application {
 
         // Extract and print the board information
         String board = components[1].substring(4);
-        this.board.fromString(board);
         for (int i = 0; i < board.length(); i += 3) {
             String rug = board.substring(i, i + 3);
             if (!rug.equals("n00")) {
@@ -269,7 +266,7 @@ public class Viewer extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         createAssamArrow();
-        String testcode = "Pr03111iPc03212iPy03313oPp03414iA23NBp01p02n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00c02c01";
+        String testcode = "Pc03015iPy03015iPp03015iPr03015iA03WBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
         displayState(testcode);
     }
 

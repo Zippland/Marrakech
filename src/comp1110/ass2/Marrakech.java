@@ -121,10 +121,6 @@ public class Marrakech {
         return true;
     }
 
-
-
-
-
     /**
      * Implement Assam's rotation.
      * Recall that Assam may only be rotated left or right, or left alone -- he cannot be rotated a full 180 degrees.
@@ -185,9 +181,50 @@ public class Marrakech {
      * @return true if the placement is valid, and false otherwise.
      */
     public static boolean isPlacementValid(String gameState, String rug) {
-        // FIXME: Task 10
+        String[] components = gameState.split("A");
+
+        // Extract and print Assam's information
+        String assamInfo = components[1].substring(0, 3);
+        Assam assam = Assam.parseAssam(assamInfo);
+        int assamX = assam.getX();
+        int assamY = assam.getY();
+
+        // Extract the rug's information
+        int rugX1 = Integer.parseInt(rug.substring(3, 4));
+        int rugY1 = Integer.parseInt(rug.substring(4, 5));
+        int rugX2 = Integer.parseInt(rug.substring(5, 6));
+        int rugY2 = Integer.parseInt(rug.substring(6, 7));
+
+        // Check if the rug is adjacent to Assam
+        if (Math.abs(rugX1 - assamX) + Math.abs(rugY1 - assamY) > 1) {
+            if (Math.abs(rugX2 - assamX) + Math.abs(rugY2 - assamY) > 1) {
+                return false;
+            }
+        }
+        // Check if the rug is covered Assam
+        if ((rugX1 == assamX && rugY1 == assamY) || (rugX2 == assamX && rugY2 == assamY)) {
+            return false;
+        }
+
+        // Check if the rug completely covers another rug
+        // Get the board string
+        String boardString = components[1].substring(4);
+
+        // Check if the rug completely covers another rug
+        int square1Index = 3 * (rugX1 * 7 + rugY1);
+        int square2Index = 3 * (rugX2 * 7 + rugY2);
+        String square1Rug = boardString.substring(square1Index, square1Index + 3);
+        String square2Rug = boardString.substring(square2Index, square2Index + 3);
+
+        if (!square1Rug.equals("n00") && !square2Rug.equals("n00")) {
+            if (square1Rug.equals(square2Rug)) {
+                return false;
+            }
+        }
+
         return true;
     }
+
 
     /**
      * Determine the amount of payment required should another player land on a square.
@@ -398,7 +435,27 @@ public class Marrakech {
      * or the input currentGame unchanged otherwise.
      */
     public static String makePlacement(String currentGame, String rug) {
-        // FIXME: Task 14
-        return "";
+        if(isPlacementValid(currentGame, rug)){
+            String boardState = currentGame.split("A")[1].substring(4);
+            String newBoardState = "";
+            Rug R = Rug.parseRug(rug);
+            for (int i = 0; i < boardState.length(); i += 3) {
+                int currentX = i / 21;
+                int currentY = (i - currentX * 21) / 3;
+                if ((currentX == R.x1 && currentY == R.y1) || (currentX == R.x2 && currentY == R.y2)) {
+                    // Replace the tile state with the new rug color and id
+                    newBoardState += String.valueOf(R.getColor()) + R.getId();
+                } else {
+                    // Keep the original tile state
+                    newBoardState += boardState.substring(i, i + 3);
+                }
+            }
+
+            // Replace the board state in the game code with the new board state
+            String newGameCode = currentGame.split("A")[0] + "A" + currentGame.split("A")[1].substring(0, 4) + newBoardState;
+
+            return newGameCode;
+        }
+        return currentGame;
     }
 }
