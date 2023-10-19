@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 
 public class Player {
     private char color;
-    private int dirhams;
+    int dirhams;
     private int rugs;
     private boolean status;
     private Game game;
@@ -53,13 +53,9 @@ public class Player {
     }
 
     public void updateGameCode(Rug rug) {
-        System.out.println(this.color);
-        System.out.println(rug.getColor());
         if (this.color == rug.getColor()) {
             // Decrease the number of rugs
             this.rugs -= 1;
-            // update the dirhams
-            this.dirhams += 1;
             // Update the status
             this.status = this.rugs == 0 ? false : true;
 

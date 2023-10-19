@@ -18,6 +18,8 @@ import javafx.util.Duration;
 public class Game extends Application {
     //Game code modification
     public String Gamecode;
+    public comp1110.ass2.Player Player;
+
     public void updateGameCode(String newGameCode) {
         this.Gamecode = newGameCode;
         displayState(this.Gamecode);

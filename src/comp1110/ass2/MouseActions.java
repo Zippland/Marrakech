@@ -73,14 +73,11 @@ public class MouseActions {
         scene.setOnMouseClicked(event -> {
             if(game.isRotatingAssam) {
                 // Confirm Assam rotation
-                System.out.println(game.lastAssam+" lastAssam"); //
                 String currentAssam = Marrakech.rotateAssam(game.lastAssam,this.totalRotation);
-                System.out.println(assam.getString()+"   "+this.totalRotation); //
                 game.assam.setDirection(currentAssam.charAt(3));
                 game.assam.setAssamDirection(game.assamImageView);
                 game.Gamecode =  game.Gamecode.substring(0,35) + currentAssam.charAt(3) + game.Gamecode.substring(36);
                 game.assam.setDirection(currentAssam.charAt(3));
-                System.out.println(assam.getString()+"   after rotate"); //
 
 
                 game.isRotatingAssam = false;
@@ -123,7 +120,6 @@ public class MouseActions {
                         // 移动Assam
                         assam.moveAssam(1, assamImageView);
                         game.lastAssam = assam.getString();
-                        System.out.println(game.lastAssam+"    after each move");
                     }));
                     timeline2.setOnFinished(event2 -> {
                         game.isRollingDice = false;
@@ -137,9 +133,35 @@ public class MouseActions {
                         diceText.setY(VIEWER_HEIGHT / 2 + 290); // Centered vertically
                         game.root.getChildren().add(diceText);
 
+                        int addims = Marrakech.getPaymentAmount(game.Gamecode);
+                        System.out.println(addims+"       dirhams");
+                        System.out.println(game.Gamecode.charAt(36+1+3*(7*(game.assam.getX())+game.assam.getY()))+"       recieved");
+                        switch (game.Gamecode.charAt(36+1+3*(7*(game.assam.getX())+game.assam.getY()))){
+                            case 'r':
+                                game.players[game.colorIndex].dirhams -= addims;
+                                game.players[0].dirhams += addims;
+                                break;
+                            case 'c':
+                                game.players[game.colorIndex].dirhams -= addims;
+                                game.players[1].dirhams += addims;
+                                break;
+                            case 'y':
+                                game.players[game.colorIndex].dirhams -= addims;
+                                game.players[2].dirhams += addims;
+                                break;
+                            case 'p':
+                                game.players[game.colorIndex].dirhams -= addims;
+                                game.players[3].dirhams += addims;
+                                break;
+                            default:
+                                break;
+                        }
+                        game.Player.updatePlayerInfo(game.playerInfo, game.players);
+
                     });
                     timeline2.play();
                     game.root.getChildren().remove(diceText);
+
                 });
 
                 rt.play();
@@ -162,7 +184,15 @@ public class MouseActions {
 
                     game.colorIndex = (game.colorIndex + 1) % game.colors.length;
 
+
                     Image newRugImage = new Image("file:src/comp1110/ass2/gui/img/" + game.colors2[game.colorIndex] + "Rug.png");
+
+                    ImageView newRugImageView = new ImageView(newRugImage);
+                    newRugImageView.setFitWidth(200);  // 设置你想要的宽度
+                    newRugImageView.setFitHeight(80);  // 设置你想要的高度
+                    newRugImageView.setX(VIEWER_WIDTH / 2 - 350);  // 在GUI的正中心显示rugImage
+                    newRugImageView.setY(VIEWER_HEIGHT / 2 - 340);  // 在GUI的正中心显示rugImage
+                    root.getChildren().add(newRugImageView);
 
                     diceText.setFont(new Font(30));
                     diceText.setFill(Color.BLACK);

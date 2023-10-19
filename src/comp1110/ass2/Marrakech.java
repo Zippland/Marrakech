@@ -255,6 +255,11 @@ public class Marrakech {
         // Get the color of the rug Assam landed on
         String assamColor = board[assamX][assamY].charAt(0) + "";
 
+        // If Assam is standing on an empty square, return 0
+        if (assamColor.equals("n")) {
+            return 0;
+        }
+
         // Initialize visited array
         boolean[][] visited = new boolean[7][7];
 

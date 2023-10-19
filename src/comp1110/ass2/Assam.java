@@ -73,8 +73,6 @@ public class Assam {
     }
 
     public void moveAssam(int dieResult, ImageView assamImageView) {
-        System.out.println("A" + game.assam.getX() + game.assam.getY() + game.assam.getDirection()+ "    is Moving");
-        System.out.println("A" + this.getX() + this.getY() + this.getDirection());
         String oldAssam = "A" + this.getX() + this.getY() + this.getDirection();
         String newAssam = Marrakech.moveAssam(oldAssam, dieResult);
 
@@ -86,8 +84,6 @@ public class Assam {
 
         // 更新Gamecode
         game.Gamecode = game.Gamecode.replace(oldAssam, newAssam);
-
-
         updateAssamView(board, assamImageView);
     }
 
