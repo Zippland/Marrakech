@@ -1,6 +1,8 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.*;
+import javafx.scene.control.ChoiceDialog;
+import java.util.Optional;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -53,6 +55,7 @@ public class Game extends Application {
     public static final int VIEWER_HEIGHT = 700;
     public ImageView assamImageView;
     public ImageView diceImageView;
+    public ImageView RollImageView;
     private ImageView rugImageView;
     public Player[] players;
     public Board board;
@@ -128,13 +131,34 @@ public class Game extends Application {
         diceImageView.setVisible(false);
         root.getChildren().add(diceImageView);
 
+        // Initialize the dice image and add it to the root group
+        Image RollImage = new Image("file:src/comp1110/ass2/gui/img/roll.png");
+        RollImageView = new ImageView(RollImage);
+        RollImageView.setFitWidth(100);
+        RollImageView.setFitHeight(100);
+        RollImageView.setVisible(true);
+        root.getChildren().add(RollImageView);
 
-        // Initialize the players
-        players = new Player[4];
-        players[0] = new Player('r', 30, 15, true, this,false);
-        players[1] = new Player('p', 30, 15, true, this,true);
-        players[2] = new Player('c', 30, 15, true, this,true);
-        players[3] = new Player('y', 30, 15, true, this,true);
+
+        // Create a dialog for player selection
+        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(1, 2, 3, 4);
+        dialog.setTitle("Player Selection");
+        dialog.setHeaderText("Please select the number of human players:");
+        Optional<Integer> result = dialog.showAndWait();
+
+        // Initialize the players based on the user's choice
+        if (result.isPresent()) {
+            int humanPlayerCount = result.get();
+            players = new Player[4];
+            for (int i = 0; i < 4; i++) {
+                if (i < humanPlayerCount) {
+                    players[i] = new Player(colors[i], 30, 15, true, this,false);
+                } else {
+                    players[i] = new Player(colors[i], 30, 15, true, this,true);
+                }
+            }
+        }
+
 
         // Mouse Actions
         MouseActions mouseActions = new MouseActions(this, rugImageView, this.assam, this.root);

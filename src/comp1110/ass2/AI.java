@@ -28,7 +28,10 @@ public class AI {
     Game game;
 
     public void aiTurn(Scene scene, ImageView rugImageView,ImageView assamImageView, Game game2) {
+
+
         this.game = game2;
+        game.RollImageView.setVisible(false);
         // Step 1: Move Assam
         // For simplicity, we can move Assam in a random direction
         int rotation = new Random().nextInt(4) * 90;  // 0, 90, 180, or 270

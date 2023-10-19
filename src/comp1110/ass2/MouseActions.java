@@ -57,6 +57,14 @@ public class MouseActions {
                     game.diceImageView.setY(event.getSceneY() - game.diceImageView.getFitHeight() / 2);
                 }
 
+                if (game.isRotatingAssam) {
+                    game.RollImageView.setVisible(true);
+                    game.RollImageView.setFitWidth(100);
+                    game.RollImageView.setFitHeight(100);
+                    game.RollImageView.setX(event.getSceneX() - game.RollImageView.getFitWidth() / 2);
+                    game.RollImageView.setY(event.getSceneY() - game.RollImageView.getFitHeight() / 2);
+                }
+
                 rugImageView.setX(event.getX() - rugImageView.getFitWidth() / 2);
                 rugImageView.setY(event.getY() - rugImageView.getFitHeight() / 2);
             }
@@ -89,6 +97,7 @@ public class MouseActions {
         scene.setOnMouseClicked(event -> {
 
                 if(game.isRotatingAssam) {
+                    game.RollImageView.setVisible(false);
                     // Confirm Assam rotation
                     String currentAssam = Marrakech.rotateAssam(game.lastAssam,this.totalRotation);
                     game.assam.setDirection(currentAssam.charAt(3));
@@ -141,13 +150,6 @@ public class MouseActions {
                             game.isRollingDice = false;
                             rugImageView.setVisible(true);
                             game.diceImageView.setVisible(false);
-
-                            diceText.setFont(new Font(30));
-                            diceText.setFill(Color.BLACK);
-                            diceText.setText(String.valueOf("Scroll the mouse wheel to control \n the orientation of the blanket."));
-                            diceText.setX(VIEWER_WIDTH / 2 - 480); // Centered horizontally
-                            diceText.setY(VIEWER_HEIGHT / 2 + 290); // Centered vertically
-                            game.root.getChildren().add(diceText);
 
                             int addims = Marrakech.getPaymentAmount(game.Gamecode);
                             System.out.println(addims+"       dirhams");
@@ -269,17 +271,11 @@ public class MouseActions {
                         newRugImageView.setY(VIEWER_HEIGHT / 2 - 340);  // 在GUI的正中心显示rugImage
                         root.getChildren().add(newRugImageView);
 
-                        diceText.setFont(new Font(30));
-                        diceText.setFill(Color.BLACK);
-                        diceText.setText(String.valueOf("Scroll the mouse wheel to control \n the orientation of Assam."));
-                        diceText.setX(VIEWER_WIDTH / 2 - 480); // Centered horizontally
-                        diceText.setY(VIEWER_HEIGHT / 2 + 290); // Centered vertically
-                        game.root.getChildren().add(diceText);
-
 
                         rugImageView.setImage(newRugImage);
                         rugImageView.setVisible(false);
                         game.isRotatingAssam = true;
+                        game.RollImageView.setVisible(true);
 
                         // Check if the next player is AI
                         if(game.getCurrentPlayer().isAI) {
