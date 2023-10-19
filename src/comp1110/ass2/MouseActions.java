@@ -6,6 +6,7 @@ import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.effect.Glow;
@@ -78,7 +79,6 @@ public class MouseActions {
                 game.assam.setAssamDirection(game.assamImageView);
                 game.Gamecode =  game.Gamecode.substring(0,35) + currentAssam.charAt(3) + game.Gamecode.substring(36);
                 game.assam.setDirection(currentAssam.charAt(3));
-
 
                 game.isRotatingAssam = false;
                 game.isRollingDice = true;
@@ -181,9 +181,41 @@ public class MouseActions {
                     game.board.addRug(rug,game.rugIsHorizontal, game);
 
                     game.getCurrentPlayer().updateGameCode(rug);
-
+                    Player.updatePlayerInfo(game.playerInfo, game.players);
+                    // 下一局的开始
                     game.colorIndex = (game.colorIndex + 1) % game.colors.length;
-
+                    System.out.println();
+                    System.out.println(game.players[game.colorIndex].color+" Turn");
+                    System.out.println("Status: "+game.players[game.colorIndex].status+" | Rugs:"+game.players[game.colorIndex].rugs);
+                    if(Marrakech.isGameOver(game.Gamecode)){
+                        System.out.println(game.Gamecode);
+                        char winner = Marrakech.getWinner(game.Gamecode);
+                        String winnerString = "";
+                        switch(winner){
+                            case 'r':
+                                winnerString = "RED";
+                                break;
+                            case 'y':
+                                winnerString = "YELLOW";
+                                break;
+                            case 'c':
+                                winnerString = "Cyan";
+                                break;
+                            case 'p':
+                                winnerString = "Purple";
+                                break;
+                            default:
+                                break;
+                        }
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Game Over");
+                        alert.setHeaderText(null);
+                        if(winner=='t'){
+                            alert.setContentText("Game Over! TIE! Would you like to play again?");
+                        }else{
+                            alert.setContentText("Game Over! The Winner is "+ winnerString +"! Would you like to play again?");
+                        }
+                    }
 
                     Image newRugImage = new Image("file:src/comp1110/ass2/gui/img/" + game.colors2[game.colorIndex] + "Rug.png");
 

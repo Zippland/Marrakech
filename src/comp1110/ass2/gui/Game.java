@@ -1,32 +1,18 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.effect.Glow;
-import javafx.util.Duration;
 
 public class Game extends Application {
     //Game code modification
     public String Gamecode;
     public comp1110.ass2.Player Player;
-
-    public void updateGameCode(String newGameCode) {
-        this.Gamecode = newGameCode;
-        displayState(this.Gamecode);
-    }
-    public String getGameCode() {
-        return this.Gamecode;
-    }
 
     //Rug Id modification
     private String RugId = "01";
@@ -73,7 +59,6 @@ public class Game extends Application {
         // Extract the player information
         Player.updatePlayerInfo(playerInfo, players);
 
-
         // Set Assam's position and direction
         this.assam.setAssamPosition(board, assamImageView);
         this.assam.setAssamDirection(assamImageView);
@@ -81,8 +66,6 @@ public class Game extends Application {
         // Extract and print the board information
         String board = components[1].substring(4);
     }
-    @Override
-
     public void start(Stage stage) throws Exception {
         stage.setTitle("Marrakech Viewer");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);

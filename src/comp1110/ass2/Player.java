@@ -5,10 +5,10 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 
 public class Player {
-    private char color;
+    char color;
     int dirhams;
-    private int rugs;
-    private boolean status;
+    int rugs;
+    boolean status;
     private Game game;
 
     public Player(char color, int dirhams, int rugs, boolean status, Game game) {
@@ -24,7 +24,7 @@ public class Player {
         for (Player player : game.players) {
             newGameCode.append(player.getPlayerString());
         }
-        game.updateGameCode(newGameCode.toString());
+        game.Gamecode = newGameCode.toString();
     }
 
     public String getPlayerString() {
@@ -45,7 +45,7 @@ public class Player {
 
 
     public Label getPlayerInfo(int yOffset) {
-        String info = "Player < " + (color == 'r' ? "  Red " : color == 'c' ? "  Clay " : color == 'y' ? "Yellow" : "Purple" ) + " >   " + dirhams + " dirhams  |  " + rugs + " rugs  |   " + (status  ? "InGame" : "Out");
+        String info = "Player < " + (color == 'r' ? "  Red " : color == 'c' ? "  Cyan " : color == 'y' ? "Yellow" : "Purple" ) + " >   " + dirhams + " dirhams  |  " + rugs + " rugs  |   " + (status  ? "InGame" : "Out");
         Label playerLabel = new Label(info);
         playerLabel.setLayoutX(780); // Set the horizontal position of the label
         playerLabel.setLayoutY(50 + yOffset); // Set the vertical position of the label using game's currentPlayerIndex
@@ -60,8 +60,8 @@ public class Player {
             this.status = this.rugs == 0 ? false : true;
 
             // Split the game code into its components
-            String[] components = this.game.getGameCode().split("P");
-            String[] Tempcomponents = this.game.getGameCode().split("A");
+            String[] components = this.game.Gamecode.split("P");
+            String[] Tempcomponents = this.game.Gamecode.split("A");
             for (int i = 1; i < components.length; i++) {
                 if (components[i].charAt(0) == this.color) {
                     // Update the player's information in the game code
@@ -80,7 +80,7 @@ public class Player {
             }
 
             // Update the game code
-            this.game.updateGameCode(newGameCode.toString());
+            this.game.Gamecode = newGameCode.toString();
         }
     }
 

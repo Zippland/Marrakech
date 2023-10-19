@@ -1,8 +1,6 @@
 package comp1110.ass2;
 
 import comp1110.ass2.gui.Game;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import static comp1110.ass2.Board.TILE_SIZE;
