@@ -28,10 +28,7 @@ public class AI {
     Game game;
 
     public void aiTurn(Scene scene, ImageView rugImageView,ImageView assamImageView, Game game2) {
-
-
         this.game = game2;
-        game.RollImageView.setVisible(false);
         // Step 1: Move Assam
         // For simplicity, we can move Assam in a random direction
         int rotation = new Random().nextInt(4) * 90;  // 0, 90, 180, or 270
@@ -84,8 +81,7 @@ public class AI {
                 game.lastAssam = game.assam.getString();
             }));
             timeline2.setOnFinished(event2 -> {
-                game.Gamecode = game.Gamecode.substring(0,32)+game.assam.getString()+game.Gamecode.substring(36);
-                System.out.println(game.Gamecode);
+                game.Gamecode = game.Gamecode.replace(lastAssamString, game.assam.toString());
                 //System.out.println(game.assam.getString());
                 //System.out.println(game.Gamecode.substring(32,35));
                 Timeline timeline4 = new Timeline();

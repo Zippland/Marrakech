@@ -19,11 +19,15 @@ import javafx.util.Duration;
 
 public class Game extends Application {
     //Game code modification
+    // Variable to hold the game code
     public String Gamecode;
+    // Variable to hold the player object
     public comp1110.ass2.Player Player;
-
+    // Method to update the game code
     public void updateGameCode(String newGameCode) {
+        // Assigning the new game code to the Gamecode variable
         this.Gamecode = newGameCode;
+        // Display the current state of the game
         displayState(this.Gamecode);
     }
     public String getGameCode() {

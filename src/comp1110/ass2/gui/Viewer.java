@@ -42,14 +42,14 @@ public class Viewer extends Application {
 
     private Board board;
 
-    // 添加一个新的Group元素来保存玩家信息标签
+    // Add a new Group element to hold the player info tag
     public final Group playerInfo = new Group();
 
-    // 更新玩家信息的方法
+    // Methods for updating player information
     public void updatePlayerInfo(String[] players) {
-        playerInfo.getChildren().clear(); // 清除旧的标签
+        playerInfo.getChildren().clear(); // Clearing old labels
 
-        int yOffset = 0; // 用于垂直定位标签的偏移量
+        int yOffset = 0; // Offset for vertically positioning labels
         for (String player : players) {
             if (!player.isEmpty()) {
                 char color = player.charAt(0);
@@ -59,22 +59,25 @@ public class Viewer extends Application {
                 String info = "Player < " + (color == 'r' ? "  Red " : color == 'c' ? "  Clay " : color == 'y' ? "Yellow" : "Purple" ) + " >   " + dirhams + " dirhams  |  " + rugs + " rugs  |   " + (status == 'i' ? "InGame" : "Out");
 
                 Label playerLabel = new Label(info);
-                playerLabel.setLayoutX(780); // 设置标签的水平位置
-                playerLabel.setLayoutY(50 + yOffset); // 设置标签的垂直位置
+                playerLabel.setLayoutX(780); /// Set the horizontal position of the label
+                playerLabel.setLayoutY(50 + yOffset); // Set the vertical position of the label
                 playerInfo.getChildren().add(playerLabel);
 
-                yOffset += 32; // 更新偏移量以便下一个标签在下方
+                yOffset += 32; // Update the offset so that the next label is below it
             }
         }
     }
 
     public Assam parseAssam(String assamString) {
+        // Parse the x-coordinate from the string
         int x = Character.getNumericValue(assamString.charAt(0));
+        // Parse the y-coordinate from the string
         int y = Character.getNumericValue(assamString.charAt(1));
+        // Parse the direction from the string
         char direction = assamString.charAt(2);
+        // Create a new Assam object with the parsed values and return it
         return new Assam(null, x, y, direction, board);
     }
-
     /**
      * Draw a placement in the window, removing any previously drawn placements
      *
@@ -189,13 +192,17 @@ public class Viewer extends Application {
     }
 
     private void createAssamArrow() {
+        // Create a new Polygon object for the arrow
         assamArrow = new Polygon();
+        // Add points to the polygon to form an arrow shape
         assamArrow.getPoints().addAll(new Double[]{
-                -10.0, -5.0,
-                10.0, 0.0,
-                -10.0, 5.0
+                -10.0, -5.0,  // Left point
+                10.0, 0.0,    // Top point
+                -10.0, 5.0    // Right point
         });
+        // Set the color of the arrow to black
         assamArrow.setFill(Color.BLACK);
+        // Add the arrow to the game root
         root.getChildren().add(assamArrow);
     }
 
