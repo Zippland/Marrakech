@@ -266,21 +266,6 @@ public class Marrakech {
         return gameBoard[x][y];
     }
 
-    public static int getPaymentAmount(String gameString, String assamString) {
-        // Convert gameString into a 2D array
-        char[][] gameBoard = convertStringToBoard(gameString);
-
-        // Parse the Assam string to get Assam's position and direction
-        int[] assamPosition = parseAssamString(assamString);
-
-        // Determine the color of the square Assam is currently on
-        char squareColor = getColorOfAssamSquare(gameBoard, assamPosition);
-
-        // Use BFS to count the number of connected squares of the same color
-        int payment = countConnectedSquares(gameBoard, squareColor);
-
-        return payment;
-    }
 
 
 
