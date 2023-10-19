@@ -236,10 +236,90 @@ public class Marrakech {
      * @param gameString A String representation of the current state of the game.
      * @return The amount of payment due, as an integer.
      */
-    public static int getPaymentAmount(String gameString) {
-        // FIXME: Task 11
-        return -1;
+    // This is a very basic implementation and will depend heavily on how your gameString is formatted
+    public static int getPaymentAmount(String gameString, String assamString) {
+        // Convert gameString into a 2D array
+        char[][] gameBoard = convertStringToBoard(gameString);
+
+        // Parse the Assam string to get Assam's position and direction
+        int[] assamPosition = parseAssamString(assamString);
+
+        // Determine the color of the square Assam is currently on
+        char squareColor = getColorOfAssamSquare(gameBoard, assamPosition);
+
+        // Use BFS to count the number of connected squares of the same color
+        int payment = countConnectedSquares(gameBoard, squareColor);
+
+        return payment;
     }
+
+    public static char[][] convertStringToBoard(String gameString) {
+        String[] rows = gameString.split("\n");
+        char[][] gameBoard = new char[rows.length][];
+        for (int i = 0; i < rows.length; i++) {
+            gameBoard[i] = rows[i].toCharArray();
+        }
+        return gameBoard;
+    }
+
+    public static int[] parseAssamString(String assamString) {
+        int x = Character.getNumericValue(assamString.charAt(1));
+        int y = Character.getNumericValue(assamString.charAt(2));
+        int direction;
+        switch (assamString.charAt(3)) {
+            case 'N':
+                direction = 0; break;
+            case 'E':
+                direction = 1; break;
+            case 'S':
+                direction = 2; break;
+            case 'W':
+                direction = 3; break;
+            default:
+                direction = -1; // Error case
+        }
+        return new int[] {x, y, direction};
+    }
+
+    public static char getColorOfAssamSquare(char[][] gameBoard, int[] assamPosition) {
+        int x = assamPosition[0];
+        int y = assamPosition[1];
+        return gameBoard[x][y];
+    }
+
+    public static int countConnectedSquares(char[][] gameBoard, char color) {
+        int count = 0;
+        boolean[][] visited = new boolean[gameBoard.length][gameBoard[0].length];
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[] {assamRow, assamCol});
+
+        while (!queue.isEmpty()) {
+            int[] square = queue.remove();
+            int row = square[0];
+            int col = square[1];
+
+            if (row < 0 || col < 0 || row >= gameBoard.length || col >= gameBoard[0].length) {
+                continue;
+            }
+
+            if (visited[row][col] || gameBoard[row][col] != color) {
+                continue;
+            }
+
+            visited[row][col] = true;
+            count++;
+            queue.add(new int[] {row - 1, col});
+            queue.add(new int[] {row + 1, col});
+            queue.add(new int[] {row, col - 1});
+            queue.add(new int[] {row, col + 1});
+        }
+
+        return count;
+    }
+
+
+
+
 
     /**
      * Determine the winner of a game of Marrakech.
