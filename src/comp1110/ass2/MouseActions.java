@@ -1,10 +1,10 @@
 package comp1110.ass2;
 
-import comp1110.ass2.*;
 import comp1110.ass2.gui.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,14 +14,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import static java.lang.Thread.sleep;
+
 public class MouseActions {
     private ImageView rugImageView;
     private Game game;
     private Glow glowEffect = new Glow(0.8);
 
-    public MouseActions(Game game, ImageView rugImageView) {
+    private Assam assam;
+    private Group root;
+
+    public MouseActions(Game game, ImageView rugImageView, Assam assam, Group root) {
         this.game = game;
         this.rugImageView = rugImageView;
+        this.assam = assam;
+        this.root = root;
     }
 
     public void handleMouseMoved(Scene scene) {
@@ -53,7 +60,7 @@ public class MouseActions {
         });
     }
 
-    public void handleMouseClicked(Scene scene) {
+    public void handleMouseClicked(Scene scene, ImageView assamImageView) {
         scene.setOnMouseClicked(event -> {
             if(game.isRotatingAssam) {
                 // Confirm Assam rotation
@@ -87,6 +94,14 @@ public class MouseActions {
                         ae -> game.root.getChildren().remove(diceText)
                 ));
                 timeline.play();
+
+                Timeline timeline2 = new Timeline();
+                timeline2.setCycleCount(roll);
+                timeline2.getKeyFrames().add(new KeyFrame(Duration.millis(500), event2 -> {
+                    // 移动Assam
+                    assam.moveAssam(1, game, root, assamImageView);
+                }));
+                timeline2.play();
 
 
                 game.isRollingDice = false;

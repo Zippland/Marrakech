@@ -185,7 +185,7 @@ public class Marrakech {
 
         // Extract and print Assam's information
         String assamInfo = components[1].substring(0, 3);
-        Assam assam = Assam.parseAssam(assamInfo);
+        Assam assam = Assam.parseAssam(assamInfo,null);
         int assamX = assam.getX();
         int assamY = assam.getY();
 

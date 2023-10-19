@@ -56,17 +56,18 @@ public class Game extends Application {
     }
 
     public void displayState(String state) {
+
         this.Gamecode = state;
+        System.out.println("TEST: "+Gamecode);
         // Split the state string into its components
         String[] components = state.split("A");
 
-        // Extract and print the player information
+        // Extract the player information
         Player.updatePlayerInfo(playerInfo, players);
 
-        // Extract and print Assam's information
-        System.out.println("TEST: "+Gamecode);
+        // Extract Assam's information
         String assamInfo = components[1].substring(0, 3);
-        assam = Assam.parseAssam(assamInfo);
+        assam = Assam.parseAssam(assamInfo,board);
 
         // Set Assam's position and direction
         assam.setAssamPosition(board, assamImageView);
@@ -100,6 +101,7 @@ public class Game extends Application {
         root.getChildren().add(playerInfo);
 
         // Initialize the Assam image and add it to the root group
+        this.assam = new Assam(3, 3, 'N', board);
         Image assamImage = new Image("file:src/comp1110/ass2/gui/img/assam.png");
         assamImageView = new ImageView(assamImage);
         assamImageView.setFitWidth(72);
@@ -115,7 +117,7 @@ public class Game extends Application {
         root.getChildren().add(rugImageView);
 
         // Initialize the dice image and add it to the root group
-        Image diceImage = new Image("file:src/comp1110/ass2/gui/img/die.png");
+        Image diceImage = new Image("file:src/comp1110/ass2/gui/img/dice.png");
         diceImageView = new ImageView(diceImage);
         diceImageView.setFitWidth(100);
         diceImageView.setFitHeight(100);
@@ -130,16 +132,16 @@ public class Game extends Application {
         players[3] = new Player('y', 30, 15, true, this);
 
         // Mouse Actions
-        MouseActions mouseActions = new MouseActions(this, rugImageView);
+        MouseActions mouseActions = new MouseActions(this, rugImageView, this.assam, this.root);
         mouseActions.handleMouseMoved(scene);
         mouseActions.handleMouseScroll(scene);
-        mouseActions.handleMouseClicked(scene);
+        mouseActions.handleMouseClicked(scene, assamImageView);
         mouseActions.handleMouseMoved(scene);
 
 
         stage.setScene(scene);
         stage.show();
-        String Gamecode = "Pr03015iPc03015iPy03015iPp03015iA33eBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
+        String Gamecode = "Pr03015iPc03015iPy03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
         displayState(Gamecode);
     }
 }

@@ -72,7 +72,7 @@ public class Viewer extends Application {
         int x = Character.getNumericValue(assamString.charAt(0));
         int y = Character.getNumericValue(assamString.charAt(1));
         char direction = assamString.charAt(2);
-        return new Assam(x, y, direction);
+        return new Assam(x, y, direction, board);
     }
 
     /**
