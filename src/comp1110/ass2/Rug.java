@@ -35,7 +35,6 @@ public class Rug {
         }
     }
     public String getRugString() {
-        System.out.println(""+color+String.format("%02d", id)+x1+y1+x2+y2);
         return ""+color+String.format("%02d", id)+x1+y1+x2+y2;
     }
 

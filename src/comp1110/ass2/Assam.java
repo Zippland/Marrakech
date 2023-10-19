@@ -12,23 +12,20 @@ public class Assam {
     private int y;
     private char direction;
     private Board board;
+    Game game;
 
 
-    public Assam(int x, int y, char direction, Board board) {
+    public Assam(Game game,int x, int y, char direction, Board board) {
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.board = board;
+        this.game = game;
     }
 
-    public static Assam parseAssam(String assamString,Board board) {
-        int x = Character.getNumericValue(assamString.charAt(0));
-        int y = Character.getNumericValue(assamString.charAt(1));
-        char direction = assamString.charAt(2);
-        return new Assam(x, y, direction,board);
+    public String getString(){
+        return "A"+this.x+this.y+this.direction;
     }
-
-
     public int getX() {
         return this.x;
     }
@@ -75,8 +72,9 @@ public class Assam {
         }
     }
 
-    public void moveAssam(int dieResult, Game game, Group root, ImageView assamImageView) {
-        System.out.println(dieResult);
+    public void moveAssam(int dieResult, ImageView assamImageView) {
+        System.out.println("A" + game.assam.getX() + game.assam.getY() + game.assam.getDirection()+ "    is Moving");
+        System.out.println("A" + this.getX() + this.getY() + this.getDirection());
         String oldAssam = "A" + this.getX() + this.getY() + this.getDirection();
         String newAssam = Marrakech.moveAssam(oldAssam, dieResult);
 
@@ -85,15 +83,12 @@ public class Assam {
         this.setX(Character.getNumericValue(newAssam.charAt(1)));
         this.setY(Character.getNumericValue(newAssam.charAt(2)));
         this.setDirection(newAssam.charAt(3));
-        System.out.println("newAssam:"+newAssam);
 
         // 更新Gamecode
-        System.out.println("oldAssam:"+oldAssam);
         game.Gamecode = game.Gamecode.replace(oldAssam, newAssam);
 
 
         updateAssamView(board, assamImageView);
-
     }
 
     private void updateAssamView(Board board, ImageView assamImageView) {

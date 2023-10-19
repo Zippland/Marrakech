@@ -1,13 +1,19 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.effect.Glow;
+import javafx.util.Duration;
 
 public class Game extends Application {
     //Game code modification
@@ -35,14 +41,14 @@ public class Game extends Application {
     public int colorIndex = 0;
     public final char[] colors = {'r', 'p', 'c', 'y'};
     public String[] colors2 = {"Red", "Purple", "Cyan", "Yellow"};
-
+    public char assamdirec = 'N';
     public boolean isRollingDice = false;
     public boolean isRotatingAssam = true;
     public boolean rugIsHorizontal = true;
     public final Group root = new Group();
     public final Group playerInfo = new Group();
-    private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 700;
+    public static final int VIEWER_WIDTH = 1200;
+    public static final int VIEWER_HEIGHT = 700;
     public ImageView assamImageView;
     public ImageView diceImageView;
     private ImageView rugImageView;
@@ -50,7 +56,7 @@ public class Game extends Application {
     public Board board;
     public Assam assam;
     private Glow glowEffect = new Glow(0.8);
-
+    public String lastAssam = "A33N";
     public Player getCurrentPlayer() {
         return players[colorIndex];
     }
@@ -58,20 +64,17 @@ public class Game extends Application {
     public void displayState(String state) {
 
         this.Gamecode = state;
-        System.out.println("TEST: "+Gamecode);
+        System.out.println(Gamecode);
         // Split the state string into its components
         String[] components = state.split("A");
 
         // Extract the player information
         Player.updatePlayerInfo(playerInfo, players);
 
-        // Extract Assam's information
-        String assamInfo = components[1].substring(0, 3);
-        assam = Assam.parseAssam(assamInfo,board);
 
         // Set Assam's position and direction
-        assam.setAssamPosition(board, assamImageView);
-        assam.setAssamDirection(assamImageView);
+        this.assam.setAssamPosition(board, assamImageView);
+        this.assam.setAssamDirection(assamImageView);
 
         // Extract and print the board information
         String board = components[1].substring(4);
@@ -101,7 +104,7 @@ public class Game extends Application {
         root.getChildren().add(playerInfo);
 
         // Initialize the Assam image and add it to the root group
-        this.assam = new Assam(3, 3, 'N', board);
+        this.assam = new Assam(this,3, 3, 'N', board);
         Image assamImage = new Image("file:src/comp1110/ass2/gui/img/assam.png");
         assamImageView = new ImageView(assamImage);
         assamImageView.setFitWidth(72);
@@ -117,12 +120,13 @@ public class Game extends Application {
         root.getChildren().add(rugImageView);
 
         // Initialize the dice image and add it to the root group
-        Image diceImage = new Image("file:src/comp1110/ass2/gui/img/dice.png");
+        Image diceImage = new Image("file:src/comp1110/ass2/gui/img/3.png");
         diceImageView = new ImageView(diceImage);
         diceImageView.setFitWidth(100);
         diceImageView.setFitHeight(100);
         diceImageView.setVisible(false);
         root.getChildren().add(diceImageView);
+
 
         // Initialize the players
         players = new Player[4];

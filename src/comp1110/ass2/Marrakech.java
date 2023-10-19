@@ -185,7 +185,7 @@ public class Marrakech {
 
         // Extract and print Assam's information
         String assamInfo = components[1].substring(0, 3);
-        Assam assam = Assam.parseAssam(assamInfo,null);
+        Assam assam = new Assam(null,Integer.parseInt(String.valueOf(components[1].charAt(0))),Integer.parseInt(String.valueOf(components[1].charAt(1))),components[1].charAt(2),null);
         int assamX = assam.getX();
         int assamY = assam.getY();
 
@@ -237,89 +237,54 @@ public class Marrakech {
      * @return The amount of payment due, as an integer.
      */
     // This is a very basic implementation and will depend heavily on how your gameString is formatted
-    public static int getPaymentAmount(String gameString, String assamString) {
-        // Convert gameString into a 2D array
-        char[][] gameBoard = convertStringToBoard(gameString);
+    public static int getPaymentAmount(String gameString) {
+        // Extract Assam's position and orientation
+        String assamString = gameString.split("B")[0].split("A")[1];
+        int assamX = Integer.parseInt(assamString.charAt(0) + "");
+        int assamY = Integer.parseInt(assamString.charAt(1) + "");
 
-        // Parse the Assam string to get Assam's position and direction
-        int[] assamPosition = parseAssamString(assamString);
+        // Extract board string
+        String boardString = gameString.split("B")[1];
 
-        // Determine the color of the square Assam is currently on
-        char squareColor = getColorOfAssamSquare(gameBoard, assamPosition);
-
-        // Use BFS to count the number of connected squares of the same color
-        int payment = countConnectedSquares(gameBoard, squareColor);
-
-        return payment;
-    }
-
-    public static char[][] convertStringToBoard(String gameString) {
-        String[] rows = gameString.split("\n");
-        char[][] gameBoard = new char[rows.length][];
-        for (int i = 0; i < rows.length; i++) {
-            gameBoard[i] = rows[i].toCharArray();
+        // Convert board string to 2D array
+        String[][] board = new String[7][7];
+        for (int i = 0; i < 49; i++) {
+            board[i / 7][i % 7] = boardString.substring(i*3, i*3+3);
         }
-        return gameBoard;
+
+        // Get the color of the rug Assam landed on
+        String assamColor = board[assamX][assamY].charAt(0) + "";
+
+        // Initialize visited array
+        boolean[][] visited = new boolean[7][7];
+
+        // Perform DFS to find connected rugs
+        return dfs(board, visited, assamX, assamY, assamColor);
     }
 
-    public static int[] parseAssamString(String assamString) {
-        int x = Character.getNumericValue(assamString.charAt(1));
-        int y = Character.getNumericValue(assamString.charAt(2));
-        int direction;
-        switch (assamString.charAt(3)) {
-            case 'N':
-                direction = 0; break;
-            case 'E':
-                direction = 1; break;
-            case 'S':
-                direction = 2; break;
-            case 'W':
-                direction = 3; break;
-            default:
-                direction = -1; // Error case
+    private static int dfs(String[][] board, boolean[][] visited, int x, int y, String color) {
+        // Check if out of bounds or already visited
+        if (x < 0 || y < 0 || x >= 7 || y >= 7 || visited[x][y]) {
+            return 0;
         }
-        return new int[] {x, y, direction};
-    }
 
-    public static char getColorOfAssamSquare(char[][] gameBoard, int[] assamPosition) {
-        int x = assamPosition[0];
-        int y = assamPosition[1];
-        return gameBoard[x][y];
-    }
-
-    public static int countConnectedSquares(char[][] gameBoard, char color) {
-        int count = 0;
-        boolean[][] visited = new boolean[gameBoard.length][gameBoard[0].length];
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[] {assamRow, assamCol});
-
-        while (!queue.isEmpty()) {
-            int[] square = queue.remove();
-            int row = square[0];
-            int col = square[1];
-
-            if (row < 0 || col < 0 || row >= gameBoard.length || col >= gameBoard[0].length) {
-                continue;
-            }
-
-            if (visited[row][col] || gameBoard[row][col] != color) {
-                continue;
-            }
-
-            visited[row][col] = true;
-            count++;
-            queue.add(new int[] {row - 1, col});
-            queue.add(new int[] {row + 1, col});
-            queue.add(new int[] {row, col - 1});
-            queue.add(new int[] {row, col + 1});
+        // Check if the rug is the same color
+        if (!board[x][y].startsWith(color)) {
+            return 0;
         }
+
+        // Mark as visited
+        visited[x][y] = true;
+
+        // Visit all adjacent squares
+        int count = 1;
+        count += dfs(board, visited, x - 1, y, color);
+        count += dfs(board, visited, x + 1, y, color);
+        count += dfs(board, visited, x, y - 1, color);
+        count += dfs(board, visited, x, y + 1, color);
 
         return count;
     }
-
-
-
-
 
     /**
      * Determine the winner of a game of Marrakech.
