@@ -7,3 +7,4 @@ of our project implements the following features:
  - A fully working game (Task 15) Done
  - Option to play against a computer opponent (Task 16) Done
  - Option to play against an intelligent computer opponent (Task 17) Done
+

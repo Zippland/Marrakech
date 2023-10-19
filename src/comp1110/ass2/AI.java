@@ -81,9 +81,9 @@ public class AI {
                 game.lastAssam = game.assam.getString();
             }));
             timeline2.setOnFinished(event2 -> {
-                game.Gamecode = game.Gamecode.replace(lastAssamString, game.assam.toString());
+                game.Gamecode = game.Gamecode.substring(0,32)+game.assam.getString()+game.Gamecode.substring(36);
                 //System.out.println(game.assam.getString());
-                //System.out.println(game.Gamecode.substring(32,35));
+                System.out.println(game.Gamecode);
                 Timeline timeline4 = new Timeline();
                 timeline4.setCycleCount(roll);
                 timeline4.getKeyFrames().add(new KeyFrame(Duration.millis(300), event4 -> {
