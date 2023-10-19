@@ -19,13 +19,6 @@ public class Player {
         this.game = game;
     }
 
-    public void updateGameCode(String Gamecode) {
-        StringBuilder newGameCode = new StringBuilder();
-        for (Player player : game.players) {
-            newGameCode.append(player.getPlayerString());
-        }
-        game.Gamecode = newGameCode.toString();
-    }
 
     public String getPlayerString() {
         return "P" + this.color + String.format("%03d", this.dirhams) + String.format("%02d", this.rugs) + (this.status ? "i" : "o");
@@ -50,6 +43,32 @@ public class Player {
         playerLabel.setLayoutX(780); // Set the horizontal position of the label
         playerLabel.setLayoutY(50 + yOffset); // Set the vertical position of the label using game's currentPlayerIndex
         return playerLabel;
+    }
+
+    public void updateGameCode() {
+        // Split the game code into its components
+        String[] components = this.game.Gamecode.split("P");
+        String[] Tempcomponents = this.game.Gamecode.split("A");
+        for (int i = 1; i < components.length; i++) {
+            if (components[i].charAt(0) == this.color) {
+                // Update the player's information in the game code
+                components[i] = Character.toString(this.color) + String.format("%03d", this.dirhams) + String.format("%02d", this.rugs) + (this.status ? "i" : "o");
+                break;
+            }
+        }
+
+        // Reconstruct the game code
+        // Reconstruct the game code
+        StringBuilder newGameCode = new StringBuilder(components[0]);
+        for (int i = 1; i < components.length; i++) {
+            newGameCode.append("P").append(components[i]);
+        }
+        if(this.color=='p'){
+            newGameCode.append("A").append(Tempcomponents[1]);
+        }
+
+        // Update the game code
+        this.game.Gamecode = newGameCode.toString();
     }
 
     public void updateGameCode(Rug rug) {

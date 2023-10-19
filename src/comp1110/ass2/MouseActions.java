@@ -139,24 +139,31 @@ public class MouseActions {
                         switch (game.Gamecode.charAt(36+1+3*(7*(game.assam.getX())+game.assam.getY()))){
                             case 'r':
                                 game.players[game.colorIndex].dirhams -= addims;
+                                game.players[game.colorIndex].updateGameCode();
                                 game.players[0].dirhams += addims;
+                                game.players[0].updateGameCode();
                                 break;
                             case 'c':
                                 game.players[game.colorIndex].dirhams -= addims;
+                                game.players[game.colorIndex].updateGameCode();
                                 game.players[1].dirhams += addims;
+                                game.players[1].updateGameCode();
                                 break;
                             case 'y':
                                 game.players[game.colorIndex].dirhams -= addims;
+                                game.players[game.colorIndex].updateGameCode();
                                 game.players[2].dirhams += addims;
+                                game.players[2].updateGameCode();
                                 break;
                             case 'p':
                                 game.players[game.colorIndex].dirhams -= addims;
+                                game.players[game.colorIndex].updateGameCode();
                                 game.players[3].dirhams += addims;
+                                game.players[3].updateGameCode();
                                 break;
                             default:
                                 break;
                         }
-
                         game.Player.updatePlayerInfo(game.playerInfo, game.players);
                         System.out.println(game.Gamecode);
 
@@ -186,6 +193,10 @@ public class MouseActions {
                     Player.updatePlayerInfo(game.playerInfo, game.players);
                     // 下一局的开始
                     game.colorIndex = (game.colorIndex + 1) % game.colors.length;
+
+                    if(Marrakech.isGameOver((game.Gamecode))){
+
+                    }
                     System.out.println();
                     System.out.println(game.players[game.colorIndex].color+" Turn");
                     System.out.println("Status: "+game.players[game.colorIndex].status+" | Rugs:"+game.players[game.colorIndex].rugs);
