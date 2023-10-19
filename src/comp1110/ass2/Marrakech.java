@@ -236,10 +236,55 @@ public class Marrakech {
      * @param gameString A String representation of the current state of the game.
      * @return The amount of payment due, as an integer.
      */
-    public static int getPaymentAmount(String gameString) {
-        // FIXME: Task 11
-        return -1;
+    public static int[] parseAssamString(String assamString) {
+        // Assuming the Assam string is in the format "AxyD" where x and y are the coordinates
+        // and D is the direction (N, E, S, W)
+
+        int x = Character.getNumericValue(assamString.charAt(1));
+        int y = Character.getNumericValue(assamString.charAt(2));
+        int direction;
+        switch (assamString.charAt(3)) {
+            case 'N':
+                direction = 0; break;
+            case 'E':
+                direction = 1; break;
+            case 'S':
+                direction = 2; break;
+            case 'W':
+                direction = 3; break;
+            default:
+                direction = -1; // Error case
+        }
+
+        return new int[] {x, y, direction};
     }
+    public static char getColorOfAssamSquare(char[][] gameBoard, int[] assamPosition) {
+        int x = assamPosition[0];
+        int y = assamPosition[1];
+
+        // Return the color of the square Assam is on
+        return gameBoard[x][y];
+    }
+
+    public static int getPaymentAmount(String gameString, String assamString) {
+        // Convert gameString into a 2D array
+        char[][] gameBoard = convertStringToBoard(gameString);
+
+        // Parse the Assam string to get Assam's position and direction
+        int[] assamPosition = parseAssamString(assamString);
+
+        // Determine the color of the square Assam is currently on
+        char squareColor = getColorOfAssamSquare(gameBoard, assamPosition);
+
+        // Use BFS to count the number of connected squares of the same color
+        int payment = countConnectedSquares(gameBoard, squareColor);
+
+        return payment;
+    }
+
+
+
+
 
     /**
      * Determine the winner of a game of Marrakech.
