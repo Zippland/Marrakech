@@ -5,7 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 
 public class Player {
-    boolean isAI;
+    public boolean isAI;
     char color;
     int dirhams;
     int rugs;
