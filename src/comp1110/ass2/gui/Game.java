@@ -132,10 +132,10 @@ public class Game extends Application {
 
         // Initialize the players
         players = new Player[4];
-        players[0] = new Player('r', 30, 15, true, this);
-        players[1] = new Player('p', 30, 15, true, this);
-        players[2] = new Player('c', 30, 15, true, this);
-        players[3] = new Player('y', 30, 15, true, this);
+        players[0] = new Player('r', 30, 1, true, this,false);
+        players[1] = new Player('p', 30, 1, true, this,true);
+        players[2] = new Player('c', 30, 1, true, this,true);
+        players[3] = new Player('y', 30, 1, true, this,true);
 
         // Mouse Actions
         MouseActions mouseActions = new MouseActions(this, rugImageView, this.assam, this.root);

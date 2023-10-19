@@ -4,9 +4,11 @@ import comp1110.ass2.gui.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.effect.Glow;
@@ -15,6 +17,8 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import javafx.scene.text.Text;
 
+
+import java.util.Optional;
 
 import static comp1110.ass2.gui.Game.VIEWER_HEIGHT;
 import static comp1110.ass2.gui.Game.VIEWER_WIDTH;
@@ -40,15 +44,19 @@ public class MouseActions {
 
     public void handleMouseMoved(Scene scene) {
         scene.setOnMouseMoved(event -> {
-            if (game.isRollingDice) {
-                game.diceImageView.setFitWidth(100);
-                game.diceImageView.setFitHeight(100);
-                game.diceImageView.setX(event.getSceneX() - game.diceImageView.getFitWidth() / 2);
-                game.diceImageView.setY(event.getSceneY() - game.diceImageView.getFitHeight() / 2);
-            }
+            if(game.getCurrentPlayer().isAI) {
+                // Call your AI code here
+            }else {
+                if (game.isRollingDice) {
+                    game.diceImageView.setFitWidth(100);
+                    game.diceImageView.setFitHeight(100);
+                    game.diceImageView.setX(event.getSceneX() - game.diceImageView.getFitWidth() / 2);
+                    game.diceImageView.setY(event.getSceneY() - game.diceImageView.getFitHeight() / 2);
+                }
 
-            rugImageView.setX(event.getX() - rugImageView.getFitWidth() / 2);
-            rugImageView.setY(event.getY() - rugImageView.getFitHeight() / 2);
+                rugImageView.setX(event.getX() - rugImageView.getFitWidth() / 2);
+                rugImageView.setY(event.getY() - rugImageView.getFitHeight() / 2);
+            }
         });
     }
 
@@ -194,7 +202,51 @@ public class MouseActions {
                     // 下一局的开始
                     game.colorIndex = (game.colorIndex + 1) % game.colors.length;
 
-                    if(Marrakech.isGameOver((game.Gamecode))){
+                    if(Marrakech.isGameOver(game.Gamecode)){
+                        char Winner = Marrakech.getWinner(game.Gamecode);
+                        String winString = "";
+                        switch(Winner){
+                            case 'r':
+                                winString = "RED";
+                                break;
+                            case 'c':
+                                winString = "CYAN";
+                                break;
+                            case 'y':
+                                winString = "YELLOW";
+                                break;
+                            case 'p':
+                                winString = "PURPLE";
+                                break;
+                            default:
+                                break;
+                        }
+                        // 创建一个新的Alert对话框
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Game Over");
+                        alert.setHeaderText(null);
+                        if(Winner == 't'){
+                            alert.setContentText("Game Over! It is a TIE!\nWould you like to play again?");
+                        }else{
+                            alert.setContentText("Game Over! Winner is "+winString+"! \nWould you like to play again?");
+                        }
+
+
+                        // 添加一个重新开始游戏的按钮
+                        alert.getButtonTypes().clear();
+                        ButtonType buttonTypeOne = new ButtonType("Yes");
+                        ButtonType buttonTypeCancel = new ButtonType("No");
+                        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+
+                        // 显示对话框并等待用户的响应
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == buttonTypeOne){
+                            // 用户点击了"Yes"按钮，重新开始游戏
+
+                        } else {
+                            // 用户点击了"No"按钮，关闭游戏
+                            Platform.exit();
+                        }
 
                     }
                     System.out.println();

@@ -5,18 +5,20 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 
 public class Player {
+    boolean isAI;
     char color;
     int dirhams;
     int rugs;
     boolean status;
     private Game game;
 
-    public Player(char color, int dirhams, int rugs, boolean status, Game game) {
+    public Player(char color, int dirhams, int rugs, boolean status, Game game, boolean isAI) {
         this.color = color;
         this.dirhams = dirhams;
         this.rugs = rugs;
         this.status = status;
         this.game = game;
+        this.isAI = isAI;
     }
 
 
@@ -58,7 +60,6 @@ public class Player {
         }
 
         // Reconstruct the game code
-        // Reconstruct the game code
         StringBuilder newGameCode = new StringBuilder(components[0]);
         for (int i = 1; i < components.length; i++) {
             newGameCode.append("P").append(components[i]);
@@ -75,8 +76,6 @@ public class Player {
         if (this.color == rug.getColor()) {
             // Decrease the number of rugs
             this.rugs -= 1;
-            // Update the status
-            this.status = this.rugs == 0 ? false : true;
 
             // Split the game code into its components
             String[] components = this.game.Gamecode.split("P");
