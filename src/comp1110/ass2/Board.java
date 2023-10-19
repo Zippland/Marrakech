@@ -72,9 +72,9 @@ public class Board {
         // Add the pane to the grid
         gridPane.add(pane, rug.x1, rug.y1);
 
-        String newGameCode = updateBoardCode(game.Gamecode, rug, rug.x1, rug.y1, rug.x2, rug.y2, game.getRugId());
+        String newGameCode = updateBoardCode(game.getGameCode(), rug, rug.x1, rug.y1, rug.x2, rug.y2, game.getRugId());
         game.updateRugId();
-        game.Gamecode = newGameCode;
+        game.updateGameCode(newGameCode);
         return false;
     }
 

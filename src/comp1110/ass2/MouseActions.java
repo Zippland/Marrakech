@@ -156,7 +156,9 @@ public class MouseActions {
                             default:
                                 break;
                         }
+
                         game.Player.updatePlayerInfo(game.playerInfo, game.players);
+                        System.out.println(game.Gamecode);
 
                     });
                     timeline2.play();
