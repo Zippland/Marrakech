@@ -151,7 +151,7 @@ public class Game extends Application {
 
 
         // Create a dialog for player selection
-        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(1, 2, 3, 4);
+        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(1, 1, 2, 3, 4);
         dialog.setTitle("Player Selection");
         dialog.setHeaderText("Please select the number of human players:");
         Optional<Integer> result = dialog.showAndWait();
