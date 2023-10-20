@@ -5,6 +5,11 @@ import javafx.scene.image.ImageView;
 
 import static comp1110.ass2.Board.TILE_SIZE;
 
+/**
+ * The Assam class represents the Assam character in the game.
+ *
+ * @author Zihan jian, Xinyue Fei
+ */
 public class Assam {
     private int x;
     private int y;
@@ -47,12 +52,16 @@ public class Assam {
     public void setDirection(char direction) {
         this.direction = direction;
     }
-
+    /**
+     * Set Assam's position based on the board and the given ImageView.
+     */
     public void setAssamPosition(Board board, ImageView assamImageView) {
         assamImageView.setX(board.getGridPane().getTranslateX() + this.x * TILE_SIZE + TILE_SIZE / 2 - assamImageView.getFitWidth() / 2);
         assamImageView.setY(board.getGridPane().getTranslateY() + this.y * TILE_SIZE + TILE_SIZE / 2 - assamImageView.getFitHeight() / 2);
     }
-
+    /**
+     * Set the direction of Assam based on the given ImageView.
+     */
     public void setAssamDirection(ImageView assamImageView) {
         switch (this.direction) {
             case 'N':
@@ -69,22 +78,26 @@ public class Assam {
                 break;
         }
     }
-
+    /**
+     * Move Assam based on the result of the dice roll.
+     */
     public void moveAssam(int dieResult, ImageView assamImageView) {
         String oldAssam = "A" + this.getX() + this.getY() + this.getDirection();
         String newAssam = Marrakech.moveAssam(oldAssam, dieResult);
 
 
-        // 解析新的Assam字符串
+        // Parse the new Assam string
         this.setX(Character.getNumericValue(newAssam.charAt(1)));
         this.setY(Character.getNumericValue(newAssam.charAt(2)));
         this.setDirection(newAssam.charAt(3));
 
-        // 更新Gamecode
+        // Update the game code
         game.Gamecode = game.Gamecode.replace(oldAssam, newAssam);
         updateAssamView(board, assamImageView);
     }
-
+    /**
+     * Update Assam's view on the board.
+     */
     private void updateAssamView(Board board, ImageView assamImageView) {
         this.setAssamPosition(board, assamImageView);
         this.setAssamDirection(assamImageView);

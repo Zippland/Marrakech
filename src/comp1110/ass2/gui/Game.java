@@ -16,8 +16,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.effect.Glow;
 import javafx.util.Duration;
-
+/**
+ * Main Game class that manages the GUI representation of the game.
+ *
+ * @author Zihan Jian, Xinyue Fei
+ */
 public class Game extends Application {
+    // Variables related to game state management
+
     //Game code modification
     // Variable to hold the game code
     public String Gamecode;

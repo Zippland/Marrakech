@@ -3,7 +3,11 @@ package comp1110.ass2;
 import comp1110.ass2.gui.Game;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-
+/**
+ * The Player class represents the Players in the game.
+ *
+ * @author Zihan jian, Xinyue Fei
+ */
 public class Player {
     public boolean isAI;
     char color;

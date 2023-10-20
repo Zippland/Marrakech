@@ -12,7 +12,11 @@ import javafx.scene.image.ImageView;
 
 
 
-
+/**
+ * The Board class create a Board for players.
+ *
+ * @author Zihan jian, Xinyue Fei
+ */
 public class Board {
     public static final int TILE_SIZE = 72; // you can adjust this value
     private static final int WIDTH = 7;

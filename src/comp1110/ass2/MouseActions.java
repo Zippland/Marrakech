@@ -17,15 +17,16 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import javafx.scene.text.Text;
 
-
 import java.util.Optional;
-import java.util.Random;
 
 import static comp1110.ass2.gui.Game.VIEWER_HEIGHT;
 import static comp1110.ass2.gui.Game.VIEWER_WIDTH;
-import static java.lang.Thread.sleep;
 
-
+/**
+ * Class that manages mouse actions within the game.
+ *
+ * @author Zihan Jian
+ */
 public class MouseActions {
     private AI aiPlayer;
     private ImageView rugImageView;
@@ -37,19 +38,25 @@ public class MouseActions {
     Text diceText = new Text();
     int totalRotation = 0;
 
+    /**
+     * Constructor for the MouseActions class.
+     */
     public MouseActions(Game game, ImageView rugImageView, Assam assam, Group root) {
         this.game = game;
         this.rugImageView = rugImageView;
         this.assam = assam;
         this.root = root;
-        this.aiPlayer = new AI();  // 初始化AI类的实例
+        this.aiPlayer = new AI();  // Initializing an instance of the AI class
     }
 
+    /**
+     * Handle mouse movement within the game scene.
+     */
     public void handleMouseMoved(Scene scene) {
         scene.setOnMouseMoved(event -> {
             if(game.getCurrentPlayer().isAI) {
-                // AI code here
-            }else {
+                // AI related code
+            } else {
                 if (game.isRollingDice) {
                     game.diceImageView.setFitWidth(100);
                     game.diceImageView.setFitHeight(100);
@@ -71,11 +78,14 @@ public class MouseActions {
         });
     }
 
+    /**
+     * Handle mouse scrolling within the game scene.
+     */
     public void handleMouseScroll(Scene scene) {
         scene.setOnScroll(event -> {
             if(game.getCurrentPlayer().isAI) {
-                // AI code here
-            }else {
+                // AI related code
+            } else {
                 if (game.isRotatingAssam) {
                     int rotation = event.getDeltaY() > 0 ? 90 : -90;
                     this.totalRotation += rotation;
@@ -93,6 +103,9 @@ public class MouseActions {
         });
     }
 
+    /**
+     * Handle mouse clicks within the game scene.
+     */
     public void handleMouseClicked(Scene scene, ImageView assamImageView) {
         scene.setOnMouseClicked(event -> {
 
@@ -110,7 +123,7 @@ public class MouseActions {
                     game.diceImageView.setVisible(true);
                     this.totalRotation = 0;
                 } else if(game.isRollingDice) {
-                    // 播放旋转动画
+                    // Play rotation animation
                     game.isRollingDice = false;
                     game.diceImageView.setFitWidth(400);
                     game.diceImageView.setFitHeight(400);
@@ -122,17 +135,17 @@ public class MouseActions {
                     rt.setAutoReverse(false);
 
                     rt.setOnFinished(event3 -> {
-                        // 获取点数
+                        // Gain points
                         int roll = Marrakech.rollDie();
-                        // 显示点数
+                        // Display number
                         ImageView diceImageView = new ImageView(new Image("file:src/comp1110/ass2/gui/img/"+ roll +".png"));
-                        diceImageView.setX(VIEWER_WIDTH / 2 - 200);  // 在GUI的正中心显示点数
-                        diceImageView.setY(VIEWER_HEIGHT / 2 - 200);  // 在GUI的正中心显示点数
+                        diceImageView.setX(VIEWER_WIDTH / 2 - 200);  // Displays points in the center of the GUI
+                        diceImageView.setY(VIEWER_HEIGHT / 2 - 200);  // Displays points in the center of the GUI
                         diceImageView.setFitWidth(400);
                         diceImageView.setFitHeight(400);
                         root.getChildren().add(diceImageView);
 
-                        // 创建一个延迟动画
+                        // Create a delayed animation
                         Timeline timeline = new Timeline(new KeyFrame(
                                 Duration.millis(1500),
                                 ae -> game.root.getChildren().remove(diceImageView)
@@ -142,7 +155,7 @@ public class MouseActions {
                         Timeline timeline2 = new Timeline();
                         timeline2.setCycleCount(roll);
                         timeline2.getKeyFrames().add(new KeyFrame(Duration.millis(500), event2 -> {
-                            // 移动Assam
+                            // Mobile Assam
                             assam.moveAssam(1, assamImageView);
                             game.lastAssam = assam.getString();
                         }));
@@ -237,7 +250,7 @@ public class MouseActions {
 
                         game.getCurrentPlayer().updateGameCode(rug);
                         Player.updatePlayerInfo(game.playerInfo, game.players);
-                        // 下一局的开始
+                        // The start of the next game
                         // Update the current player index
                         game.colorIndex = (game.colorIndex + 1) % game.colors.length;
                         //System.out.println(game.colorIndex);
@@ -261,7 +274,7 @@ public class MouseActions {
                                 default:
                                     break;
                             }
-                            // 创建一个新的Alert对话框
+                            // Create a new Alert dialog
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Game Over");
                             alert.setHeaderText(null);
@@ -272,19 +285,19 @@ public class MouseActions {
                             }
 
 
-                            // 添加一个重新开始游戏的按钮
+                            // Add a restart game button
                             alert.getButtonTypes().clear();
                             ButtonType buttonTypeOne = new ButtonType("Yes");
                             ButtonType buttonTypeCancel = new ButtonType("No");
                             alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
 
-                            // 显示对话框并等待用户的响应
+                            // Displays the dialog box and waits for the user's response
                             Optional<ButtonType> result = alert.showAndWait();
                             if (result.get() == buttonTypeOne) {
-                                // 用户点击了"Yes"按钮，重新开始游戏
+                                // The user clicks the "Yes" button and restarts the game
                                 Platform.exit();
                             } else {
-                                // 用户点击了"No"按钮，关闭游戏
+                                // The user clicks the "No" button to close the game
                                 Platform.exit();
                             }
 

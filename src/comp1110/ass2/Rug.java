@@ -1,6 +1,11 @@
 package comp1110.ass2;
 
 import javafx.scene.image.Image;
+/**
+ * The Rug class represents the Rugs in the game.
+ *
+ * @author Zihan jian, Xinyue Fei
+ */
 public class Rug {
     private Image image;
     private char color;

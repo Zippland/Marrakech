@@ -21,12 +21,18 @@ import java.util.Scanner;
 
 import static comp1110.ass2.gui.Game.VIEWER_HEIGHT;
 import static comp1110.ass2.gui.Game.VIEWER_WIDTH;
-
+/**
+ * AI class that manages the artificial intelligence behavior for the game.
+ *
+ * @author Xinyue Fei
+ */
 public class AI {
     int totalRotation = 0;
     String winString = "";
     Game game;
-
+    /**
+     * Simulates a turn for the AI.
+     */
     public void aiTurn(Scene scene, ImageView rugImageView,ImageView assamImageView, Game game2) {
         this.game = game2;
         // Step 1: Move Assam
@@ -76,7 +82,7 @@ public class AI {
             String lastAssamString = game.assam.getString();
             timeline2.setCycleCount(roll);
             timeline2.getKeyFrames().add(new KeyFrame(Duration.millis(500), event2 -> {
-                // 移动Assam
+                // Move Assam
                 game.assam.moveAssam(1, assamImageView);
                 game.lastAssam = game.assam.getString();
             }));
