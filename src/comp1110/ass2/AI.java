@@ -96,28 +96,56 @@ public class AI {
                     //System.out.println(game.Gamecode.charAt(36+1+3*(7*(game.assam.getX())+game.assam.getY()))+"       recieved");
                     switch (game.Gamecode.charAt(36+1+3*(7*(game.assam.getX())+game.assam.getY()))){
                         case 'r':
-                            game.players[game.colorIndex].dirhams -= addims;
-                            game.players[game.colorIndex].updateGameCode();
-                            game.players[0].dirhams += addims;
-                            game.players[0].updateGameCode();
+                            if(game.players[game.colorIndex].dirhams > addims){
+                                game.players[game.colorIndex].dirhams -= addims;
+                                game.players[game.colorIndex].updateGameCode();
+                                game.players[0].dirhams += addims;
+                                game.players[0].updateGameCode();
+                            }else{
+                                game.players[0].dirhams += game.players[game.colorIndex].dirhams;
+                                game.players[0].updateGameCode();
+                                game.players[game.colorIndex].dirhams = 0;
+                                game.players[game.colorIndex].updateGameCode();
+                            }
                             break;
                         case 'c':
-                            game.players[game.colorIndex].dirhams -= addims;
-                            game.players[game.colorIndex].updateGameCode();
-                            game.players[1].dirhams += addims;
-                            game.players[1].updateGameCode();
+                            if(game.players[game.colorIndex].dirhams > addims){
+                                game.players[game.colorIndex].dirhams -= addims;
+                                game.players[game.colorIndex].updateGameCode();
+                                game.players[1].dirhams += addims;
+                                game.players[1].updateGameCode();
+                            }else{
+                                game.players[1].dirhams += game.players[game.colorIndex].dirhams;
+                                game.players[1].updateGameCode();
+                                game.players[game.colorIndex].dirhams = 0;
+                                game.players[game.colorIndex].updateGameCode();
+                            }
                             break;
                         case 'y':
-                            game.players[game.colorIndex].dirhams -= addims;
-                            game.players[game.colorIndex].updateGameCode();
-                            game.players[2].dirhams += addims;
-                            game.players[2].updateGameCode();
+                            if(game.players[game.colorIndex].dirhams > addims){
+                                game.players[game.colorIndex].dirhams -= addims;
+                                game.players[game.colorIndex].updateGameCode();
+                                game.players[2].dirhams += addims;
+                                game.players[2].updateGameCode();
+                            }else{
+                                game.players[2].dirhams += game.players[game.colorIndex].dirhams;
+                                game.players[2].updateGameCode();
+                                game.players[game.colorIndex].dirhams = 0;
+                                game.players[game.colorIndex].updateGameCode();
+                            }
                             break;
                         case 'p':
-                            game.players[game.colorIndex].dirhams -= addims;
-                            game.players[game.colorIndex].updateGameCode();
-                            game.players[3].dirhams += addims;
-                            game.players[3].updateGameCode();
+                            if(game.players[game.colorIndex].dirhams > addims){
+                                game.players[game.colorIndex].dirhams -= addims;
+                                game.players[game.colorIndex].updateGameCode();
+                                game.players[3].dirhams += addims;
+                                game.players[3].updateGameCode();
+                            }else{
+                                game.players[3].dirhams += game.players[game.colorIndex].dirhams;
+                                game.players[3].updateGameCode();
+                                game.players[game.colorIndex].dirhams = 0;
+                                game.players[game.colorIndex].updateGameCode();
+                            }
                             break;
                         default:
                             break;
