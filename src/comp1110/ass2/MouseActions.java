@@ -289,32 +289,35 @@ public class MouseActions {
                                 default:
                                     break;
                             }
-                            // Create a new Alert dialog
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Game Over");
-                            alert.setHeaderText(null);
-                            if (Winner == 't') {
-                                alert.setContentText("Game Over! It is a TIE!\nWould you like to play again?");
-                            } else {
-                                alert.setContentText("Game Over! Winner is " + winString + "! \nWould you like to play again?");
-                            }
+                            final String finalWinString = winString;
+                            Platform.runLater(() -> {
+                                // Create a new Alert dialog
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Game Over");
+                                alert.setHeaderText(null);
+                                if (Winner == 't') {
+                                    alert.setContentText("Game Over! It is a TIE!\nWould you like to play again?");
+                                } else {
+                                    alert.setContentText("Game Over! Winner is " + finalWinString + "! \nWould you like to play again?");
+                                }
 
 
-                            // Add a restart game button
-                            alert.getButtonTypes().clear();
-                            ButtonType buttonTypeOne = new ButtonType("Yes");
-                            ButtonType buttonTypeCancel = new ButtonType("No");
-                            alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+                                // Add a restart game button
+                                alert.getButtonTypes().clear();
+                                ButtonType buttonTypeOne = new ButtonType("Yes");
+                                ButtonType buttonTypeCancel = new ButtonType("No");
+                                alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
 
-                            // Displays the dialog box and waits for the user's response
-                            Optional<ButtonType> result = alert.showAndWait();
-                            if (result.get() == buttonTypeOne) {
-                                // The user clicks the "Yes" button and restarts the game
-                                Platform.exit();
-                            } else {
-                                // The user clicks the "No" button to close the game
-                                Platform.exit();
-                            }
+                                // Displays the dialog box and waits for the user's response
+                                Optional<ButtonType> result = alert.showAndWait();
+                                if (result.get() == buttonTypeOne) {
+                                    // The user clicks the "Yes" button and restarts the game
+                                    Platform.exit();
+                                } else {
+                                    // The user clicks the "No" button to close the game
+                                    Platform.exit();
+                                }
+                            });
 
                         }
 

@@ -218,32 +218,35 @@ public class AI {
                                 default:
                                     break;
                             }
-                            // 创建一个新的Alert对话框
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Game Over");
-                            alert.setHeaderText(null);
-                            if (Winner == 't') {
-                                alert.setContentText("Game Over! It is a TIE!\nWould you like to play again?");
-                            } else {
-                                alert.setContentText("Game Over! Winner is " + winString + "! \nWould you like to play again?");
-                            }
+                            final String finalWinString = winString;
+                            Platform.runLater(() -> {
+                                // 创建一个新的Alert对话框
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Game Over");
+                                alert.setHeaderText(null);
+                                if (Winner == 't') {
+                                    alert.setContentText("Game Over! It is a TIE!\nWould you like to play again?");
+                                } else {
+                                    alert.setContentText("Game Over! Winner is " + finalWinString + "! \nWould you like to play again?");
+                                }
 
 
-                            // 添加一个重新开始游戏的按钮
-                            alert.getButtonTypes().clear();
-                            ButtonType buttonTypeOne = new ButtonType("Yes");
-                            ButtonType buttonTypeCancel = new ButtonType("No");
-                            alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+                                // 添加一个重新开始游戏的按钮
+                                alert.getButtonTypes().clear();
+                                ButtonType buttonTypeOne = new ButtonType("Yes");
+                                ButtonType buttonTypeCancel = new ButtonType("No");
+                                alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
 
-                            // 显示对话框并等待用户的响应
-                            Optional<ButtonType> result = alert.showAndWait();
-                            if (result.get() == buttonTypeOne) {
-                                // 用户点击了"Yes"按钮，重新开始游戏
-
-                            } else {
-                                // 用户点击了"No"按钮，关闭游戏
-                                Platform.exit();
-                            }
+                                // 显示对话框并等待用户的响应
+                                Optional<ButtonType> result = alert.showAndWait();
+                                if (result.get() == buttonTypeOne) {
+                                    // 用户点击了"Yes"按钮，重新开始游戏
+                                    Platform.exit();
+                                } else {
+                                    // 用户点击了"No"按钮，关闭游戏
+                                    Platform.exit();
+                                }
+                            });
 
                         }
 
