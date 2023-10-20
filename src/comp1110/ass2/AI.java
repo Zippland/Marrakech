@@ -102,55 +102,67 @@ public class AI {
                     //System.out.println(game.Gamecode.charAt(36+1+3*(7*(game.assam.getX())+game.assam.getY()))+"       recieved");
                     switch (game.Gamecode.charAt(36+1+3*(7*(game.assam.getX())+game.assam.getY()))){
                         case 'r':
-                            if(game.players[game.colorIndex].dirhams > addims){
-                                game.players[game.colorIndex].dirhams -= addims;
-                                game.players[game.colorIndex].updateGameCode();
-                                game.players[0].dirhams += addims;
-                                game.players[0].updateGameCode();
-                            }else{
-                                game.players[0].dirhams += game.players[game.colorIndex].dirhams;
-                                game.players[0].updateGameCode();
-                                game.players[game.colorIndex].dirhams = 0;
-                                game.players[game.colorIndex].updateGameCode();
+                            if(game.players[0].status = true) {
+                                if (game.players[game.colorIndex].dirhams > addims) {
+                                    game.players[game.colorIndex].dirhams -= addims;
+                                    game.players[game.colorIndex].updateGameCode();
+                                    game.players[0].dirhams += addims;
+                                    game.players[0].updateGameCode();
+                                } else {
+                                    game.players[0].dirhams += game.players[game.colorIndex].dirhams;
+                                    game.players[0].updateGameCode();
+                                    game.players[game.colorIndex].dirhams = 0;
+                                    game.players[game.colorIndex].status = false;
+                                    game.players[game.colorIndex].updateGameCode();
+                                }
                             }
                             break;
                         case 'c':
-                            if(game.players[game.colorIndex].dirhams > addims){
-                                game.players[game.colorIndex].dirhams -= addims;
-                                game.players[game.colorIndex].updateGameCode();
-                                game.players[1].dirhams += addims;
-                                game.players[1].updateGameCode();
-                            }else{
-                                game.players[1].dirhams += game.players[game.colorIndex].dirhams;
-                                game.players[1].updateGameCode();
-                                game.players[game.colorIndex].dirhams = 0;
-                                game.players[game.colorIndex].updateGameCode();
+                            if(game.players[1].status = true) {
+                                if (game.players[game.colorIndex].dirhams > addims) {
+                                    game.players[game.colorIndex].dirhams -= addims;
+                                    game.players[game.colorIndex].updateGameCode();
+                                    game.players[1].dirhams += addims;
+                                    game.players[1].updateGameCode();
+                                } else {
+                                    game.players[1].dirhams += game.players[game.colorIndex].dirhams;
+                                    game.players[1].updateGameCode();
+                                    game.players[game.colorIndex].dirhams = 0;
+                                    game.players[game.colorIndex].status = false;
+                                    game.players[game.colorIndex].updateGameCode();
+                                }
                             }
                             break;
                         case 'y':
-                            if(game.players[game.colorIndex].dirhams > addims){
-                                game.players[game.colorIndex].dirhams -= addims;
-                                game.players[game.colorIndex].updateGameCode();
-                                game.players[2].dirhams += addims;
-                                game.players[2].updateGameCode();
-                            }else{
-                                game.players[2].dirhams += game.players[game.colorIndex].dirhams;
-                                game.players[2].updateGameCode();
-                                game.players[game.colorIndex].dirhams = 0;
-                                game.players[game.colorIndex].updateGameCode();
+                            if(game.players[2].status = true) {
+                                if (game.players[game.colorIndex].dirhams > addims) {
+                                    game.players[game.colorIndex].dirhams -= addims;
+                                    game.players[game.colorIndex].updateGameCode();
+                                    game.players[2].dirhams += addims;
+                                    game.players[2].updateGameCode();
+                                } else {
+                                    game.players[2].dirhams += game.players[game.colorIndex].dirhams;
+                                    game.players[2].updateGameCode();
+                                    game.players[game.colorIndex].dirhams = 0;
+                                    game.players[game.colorIndex].status = false;
+                                    game.players[game.colorIndex].updateGameCode();
+                                }
                             }
                             break;
                         case 'p':
-                            if(game.players[game.colorIndex].dirhams > addims){
-                                game.players[game.colorIndex].dirhams -= addims;
-                                game.players[game.colorIndex].updateGameCode();
-                                game.players[3].dirhams += addims;
-                                game.players[3].updateGameCode();
-                            }else{
-                                game.players[3].dirhams += game.players[game.colorIndex].dirhams;
-                                game.players[3].updateGameCode();
-                                game.players[game.colorIndex].dirhams = 0;
-                                game.players[game.colorIndex].updateGameCode();
+                            if(game.players[3].status = true) {
+                                if (game.players[game.colorIndex].dirhams > addims) {
+                                    game.players[game.colorIndex].dirhams -= addims;
+                                    game.players[game.colorIndex].updateGameCode();
+                                    game.players[3].dirhams += addims;
+                                    game.players[3].updateGameCode();
+                                } else {
+                                    game.players[3].dirhams += game.players[game.colorIndex].dirhams;
+                                    game.players[3].updateGameCode();
+                                    game.players[game.colorIndex].dirhams = 0;
+                                    game.players[game.colorIndex].status = false;
+                                    game.players[game.colorIndex].updateGameCode();
+                                }
                             }
                             break;
                         default:
@@ -182,6 +194,9 @@ public class AI {
                         // 下一局的开始
                         // Update the current player index
                         game.colorIndex = (game.colorIndex + 1) % game.colors.length;
+                        while(game.getCurrentPlayer().status==false){
+                            game.colorIndex = (game.colorIndex + 1) % game.colors.length;
+                        }
                         //System.out.println(game.colorIndex);
 
                         if (Marrakech.isGameOver(game.Gamecode)) {

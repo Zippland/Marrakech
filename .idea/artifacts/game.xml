@@ -11,7 +11,6 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../../../javafx/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.swing.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../../../javafx/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.controls.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../../../../javafx/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.graphics.jar" path-in-jar="/" />
-      <element id="library" level="project" name="lib2" />
       <element id="library" level="project" name="javafx" />
     </root>
   </artifact>

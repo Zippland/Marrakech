@@ -162,9 +162,9 @@ public class Game extends Application {
             players = new Player[4];
             for (int i = 0; i < 4; i++) {
                 if (i < humanPlayerCount) {
-                    players[i] = new Player(colors[i], 30, 15, true, this,false);
+                    players[i] = new Player(colors[i], 5, 15, true, this,false);
                 } else {
-                    players[i] = new Player(colors[i], 30, 15, true, this,true);
+                    players[i] = new Player(colors[i], 5, 15, true, this,true);
                 }
             }
         }
